@@ -11,5 +11,5 @@ script:
   if [[ $nv != v0.12.18 ]] ; then
     npm test;
   else
-    npm run 0.12;
+    npm --harmony run 0.12;
   fi
