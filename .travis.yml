@@ -5,3 +5,11 @@ node_js:
   - v5
   - v4
   - '0.12'
+
+script:
+  nv=$(node -v);
+  if [[ $nv != v0.12.18 ]] ; then
+    npm test;
+  else
+    npm run 0.12;
+  fi

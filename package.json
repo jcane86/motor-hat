@@ -53,7 +53,8 @@
   "repository": "jcane86/motor-hat",
   "scripts": {
     "prepublish": "gulp prepublish",
-    "test": "gulp"
+    "test": "gulp",
+    "0.12": "node --harmony `which gulp`"
   },
   "license": "MIT"
 }
