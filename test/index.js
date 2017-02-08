@@ -31,6 +31,15 @@ describe('motor-hat', function () {
     }, Error, 'Error thrown!');
   });
 
+  it('should respect max combination of dc + stepper', function () {
+    assert.throws(function () {
+      motorHat({
+        stepper: [1],
+        dc: [3, 4]
+      });
+    }, Error, 'Error thrown!');
+  });
+
   it('should respect frequency type', function () {
     assert.throws(function () {
       motorHat({
