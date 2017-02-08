@@ -10,34 +10,77 @@ describe('motor-hat', function () {
   it('should respect max number of steppers', function () {
     assert.throws(function () {
       motorHat({
-        steppers: [1, 2, 3]
+        steppers: [2]
       });
-    }, Error, 'Error thrown!');
+    }, Error, 'Error was not thrown!');
   });
 
   it('should respect max number of DC motors', function () {
     assert.throws(function () {
       motorHat({
-        dc: [1, 2, 3, 4, 5]
+        dc: [4]
       });
-    }, Error, 'Error thrown!');
+    }, Error, 'Error was not thrown!');
   });
 
   it('should respect max number of servos', function () {
     assert.throws(function () {
       motorHat({
-        servos: [1, 2, 3, 4, 5]
+        servos: [4]
       });
-    }, Error, 'Error thrown!');
+    }, Error, 'Error was not thrown!');
   });
 
-  it('should respect max combination of dc + stepper', function () {
+  it('should respect motor overlappings', function () {
     assert.throws(function () {
       motorHat({
-        stepper: [1],
-        dc: [3, 4]
+        steppers: [0],
+        dc: [1]
       });
-    }, Error, 'Error thrown!');
+    }, Error, 'Error was not thrown!');
+
+    assert.throws(function () {
+      motorHat({
+        dc: [1, 1]
+      });
+    }, Error, 'Error was not thrown!');
+
+    assert.throws(function () {
+      motorHat({
+        steppers: [1, 1]
+      });
+    }, Error, 'Error was not thrown!');
+
+    assert.throws(function () {
+      motorHat({
+        servos: [1, 1]
+      });
+    }, Error, 'Error was not thrown!');
+
+    // Servos are defined 0 to 4 and always on their own pins from 4++
+    // assert.throws(function () {
+    //   motorHat({
+    //     steppers: [1],
+    //     servos: [2]
+    //   });
+    // }, Error, 'Error was not thrown!');
+    //
+    // assert.throws(function () {
+    //   motorHat({
+    //     dc: [1],
+    //     servos: [1]
+    //   });
+    // }, Error, 'Error was not thrown!');
+  });
+
+  it('should respect correct motor definitions', function () {
+    assert.doesNotThrow(function () {
+      motorHat({
+        stepper: [0],
+        dc: [2],
+        servos: [0]
+      });
+    });
   });
 
   it('should respect frequency type', function () {
@@ -45,7 +88,7 @@ describe('motor-hat', function () {
       motorHat({
         frequency: 'string'
       });
-    }, Error, 'Error thrown!');
+    }, Error, 'Error was not thrown!');
   });
 
   it('should respect I2C Address type', function () {
@@ -53,6 +96,6 @@ describe('motor-hat', function () {
       motorHat({
         address: 'string'
       });
-    }, Error, 'Error thrown!');
+    }, Error, 'Error was not thrown!');
   });
 });
