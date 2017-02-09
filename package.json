@@ -56,5 +56,8 @@
     "test": "gulp",
     "0.12": "node --harmony `which gulp`"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "i2c-bus": "^1.2.0"
+  }
 }
