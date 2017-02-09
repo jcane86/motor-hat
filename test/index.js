@@ -98,4 +98,10 @@ describe('motor-hat', function () {
       });
     }, Error, 'Error was not thrown!');
   });
+
+  it('should have setters and getters for freq and addr', function () {
+    assert.equal(motorHat().setFrequency(10).getFrequency(), 10, 'Different freq set and gotten.');
+
+    assert.equal(motorHat().setAddress(0x10).getAddress(), 0x10, 'Different addr set and gotten.');
+  });
 });
