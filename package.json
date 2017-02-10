@@ -58,6 +58,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "i2c-bus": "^1.2.0"
+    "i2c-bus": "^1.2.0",
+    "sleep": "^5.1.0"
   }
 }
