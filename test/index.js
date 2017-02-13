@@ -1,6 +1,6 @@
 'use strict';
-import assert from 'assert';
-import motorHat from '../lib';
+let assert = require('assert');
+let motorHat = require('../lib/index.js');
 
 describe('motor-hat', function () {
   it('should have constructor', function () {

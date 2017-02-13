@@ -42,7 +42,8 @@
     "gulp-mocha": "^3.0.1",
     "gulp-nsp": "^2.4.2",
     "gulp-plumber": "^1.1.0",
-    "isparta": "^4.0.0"
+    "isparta": "^4.0.0",
+    "sinon": "^1.17.7"
   },
   "eslintConfig": {
     "extends": "xo-space",
@@ -54,7 +55,8 @@
   "scripts": {
     "prepublish": "node --harmony `which gulp` prepublish",
     "test": "gulp",
-    "0.12": "node --harmony `which gulp`"
+    "0.12": "node --harmony `which gulp`",
+    "watch": "gulp watch"
   },
   "license": "MIT",
   "dependencies": {
