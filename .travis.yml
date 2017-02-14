@@ -6,4 +6,4 @@ node_js:
   - v4
 install:
   - npm install i2c-bus --ignore-scripts
-  -npm install
+  - npm install
