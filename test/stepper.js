@@ -259,7 +259,7 @@ describe('lib/stepper.js', function () {
       }
       return true;
     };
-    inst.setSpeed({pps: 60});
+    inst.setSpeed({pps: 6000});
 
     it('should do 4 * 16 microsteps', function () {
       inst.stepSync('fwd', 4 * 16);
