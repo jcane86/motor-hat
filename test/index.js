@@ -35,7 +35,7 @@ describe('motor-hat', function () {
     assert.throws(function () {
       motorHat({
         steppers: [0],
-        dc: [1]
+        dc: [0]
       });
     }, Error, 'Error was not thrown!');
 
@@ -56,21 +56,6 @@ describe('motor-hat', function () {
         servos: [1, 1]
       });
     }, Error, 'Error was not thrown!');
-
-    // Servos are defined 0 to 4 and always on their own pins from 4++
-    // assert.throws(function () {
-    //   motorHat({
-    //     steppers: [1],
-    //     servos: [2]
-    //   });
-    // }, Error, 'Error was not thrown!');
-    //
-    // assert.throws(function () {
-    //   motorHat({
-    //     dc: [1],
-    //     servos: [1]
-    //   });
-    // }, Error, 'Error was not thrown!');
   });
 
   it('should respect correct motor definitions', function () {
