@@ -63,7 +63,9 @@
   },
   "license": "MIT",
   "dependencies": {
+    "debug": "^2.6.1",
     "i2c-bus": "^1.2.0",
+    "parambulator": "^1.5.2",
     "raspi-ver": "^1.0.2",
     "sleep": "^5.1.0"
   }

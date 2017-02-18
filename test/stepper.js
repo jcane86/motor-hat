@@ -32,33 +32,55 @@ describe('lib/stepper.js', function () {
     }, Error, 'no errors thrown!');
   });
 
-  it('should require channel to initialize', function () {
+  it('should require 6 pins to initialize', function () {
     assert.throws(function () {
       stepper({pwm: {}});
     }, Error, 'no errors thrown!');
+
+    assert.throws(function () {
+      stepper({pwm: {}, pins: 1});
+    }, Error, 'no errors thrown!');
+
+    assert.throws(function () {
+      stepper({pwm: {}, pins: [10]});
+    }, Error, 'no errors thrown!');
   });
 
-  it('should require channels in [0,1]', function () {
+  it('should require exactly 6 pins', function () {
     assert.throws(function () {
-      stepper({pwm: {}, channel: 2});
+      stepper({pwm: {}, pins: [0, 1, 2, 3, 4, 5, 6]});
+    }, Error, 'no errors thrown!');
+
+    assert.throws(function () {
+      stepper({pwm: {}, pins: [0, 1, 2, 3, 4]});
+    }, Error, 'no errors thrown!');
+  });
+
+  it('should require pins in [0 to 15]', function () {
+    assert.throws(function () {
+      stepper({pwm: {}, pins: [16, 1, 2, 3, 4, 5]});
+    }, Error, 'no errors thrown!');
+
+    assert.throws(function () {
+      stepper({pwm: {}, pins: [-1, 3, 4, 5, 6, 7]});
     }, Error, 'no errors thrown!');
   });
 
   it('should require pwm instance to initialize', function () {
     assert.throws(function () {
-      stepper({channel: 2});
+      stepper({pins: ports[0]});
     }, Error, 'no errors thrown!');
   });
 
   it('should fail without speed', function () {
     assert.throws(function () {
-      stepper({pwm: {}, channel: 0}).stepSync('fwd', 4);
+      stepper({pwm: {setPWMFreq: function () {}}, pins: ports[0]}).stepSync('fwd', 4);
     }, Error, 'no errors thrown!');
   });
 
   it('should initialize', function () {
     assert.doesNotThrow(function () {
-      stepper({pwm: {setPWMFreq: function () {}}, channel: 0});
+      stepper({pwm: {setPWMFreq: function () {}}, pins: ports[0]});
     }, Error, 'it threw an error!');
   });
 
@@ -81,9 +103,9 @@ describe('lib/stepper.js', function () {
           step = (-(j + 1) + 4) % 4;
         }
 
-        assert(pwm.setPWM.getCall(pwmCall + 0).calledWith(p.PWMA, 0, 255 * 16));
+        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.PWMA, 0, 255 * 16));
         assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.PWMB, 0, 255 * 16));
-        assert(pwm.setPin.getCall(pinCall + 0).calledWith(p.AIN2, step2coils[step][0]));
+        assert(pwm.setPin.getCall(pinCall).calledWith(p.AIN2, step2coils[step][0]));
         assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.BIN1, step2coils[step][1]));
         assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.AIN1, step2coils[step][2]));
         assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.BIN2, step2coils[step][3]));
@@ -97,7 +119,7 @@ describe('lib/stepper.js', function () {
         setPWMFreq: sinon.spy(),
         setPin: sinon.spy()
       };
-      let inst = stepper({pwm: pwm, channel: 0, pps: 600});
+      let inst = stepper({pwm: pwm, pins: ports[0], pps: 600});
       inst.stepSync('fwd', 4);
       assert(checkDoubleStep(pwm, 4, 0, 'fwd'));
     });
@@ -108,7 +130,7 @@ describe('lib/stepper.js', function () {
         setPWMFreq: sinon.spy(),
         setPin: sinon.spy()
       };
-      let inst = stepper({pwm: pwm, channel: 0, pps: 600});
+      let inst = stepper({pwm: pwm, pins: ports[0], pps: 600});
       inst.stepSync('back', 4);
       assert(checkDoubleStep(pwm, 4, 0, 'back'));
     });
@@ -132,9 +154,9 @@ describe('lib/stepper.js', function () {
         if (dir === 'back') {
           step = (-(j) + 4) % 4;
         }
-        assert(pwm.setPWM.getCall(pwmCall + 0).calledWith(p.PWMA, 0, 255 * 16));
+        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.PWMA, 0, 255 * 16));
         assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.PWMB, 0, 255 * 16));
-        assert(pwm.setPin.getCall(pinCall + 0).calledWith(p.AIN2, step2coils[step][0]));
+        assert(pwm.setPin.getCall(pinCall).calledWith(p.AIN2, step2coils[step][0]));
         assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.BIN1, step2coils[step][1]));
         assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.AIN1, step2coils[step][2]));
         assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.BIN2, step2coils[step][3]));
@@ -148,7 +170,7 @@ describe('lib/stepper.js', function () {
         setPWMFreq: sinon.spy(),
         setPin: sinon.spy()
       };
-      let inst = stepper({pwm: pwm, channel: 0, style: 'single', pps: 600});
+      let inst = stepper({pwm: pwm, pins: ports[0], style: 'single', pps: 600});
       inst.stepSync('fwd', 4);
       assert(checkSingleStep(pwm, 4, 0, 'fwd'));
     });
@@ -159,7 +181,7 @@ describe('lib/stepper.js', function () {
         setPWMFreq: sinon.spy(),
         setPin: sinon.spy()
       };
-      let inst = stepper({pwm: pwm, channel: 0, style: 'single', pps: 600});
+      let inst = stepper({pwm: pwm, pins: ports[0], style: 'single', pps: 600});
       inst.stepSync('back', 4);
       assert(checkSingleStep(pwm, 4, 0, 'back'));
     });
@@ -192,9 +214,9 @@ describe('lib/stepper.js', function () {
           pwmstepA = ((-(j) % 16) + 16) % 16;
           pwmstepB = (((-j + 8) % 16) + 16) % 16;
         }
-        assert(pwm.setPWM.getCall(pwmCall + 0).calledWith(p.PWMA, 0, expectedPWM[pwmstepA] * 16));
+        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.PWMA, 0, expectedPWM[pwmstepA] * 16));
         assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.PWMB, 0, expectedPWM[pwmstepB] * 16));
-        assert(pwm.setPin.getCall(pinCall + 0).calledWith(p.AIN2, step2coils[step][0]));
+        assert(pwm.setPin.getCall(pinCall).calledWith(p.AIN2, step2coils[step][0]));
         assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.BIN1, step2coils[step][1]));
         assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.AIN1, step2coils[step][2]));
         assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.BIN2, step2coils[step][3]));
@@ -208,7 +230,7 @@ describe('lib/stepper.js', function () {
         setPWMFreq: sinon.spy(),
         setPin: sinon.spy()
       };
-      let inst = stepper({pwm: pwm, channel: 0, style: 'microstep', pps: 600});
+      let inst = stepper({pwm: pwm, pins: ports[0], style: 'microstep', pps: 600});
       inst.stepSync('fwd', 4 * 8);
       assert(check8MicroStep(pwm, 4 * 8, 0, 'fwd'));
     });
@@ -219,7 +241,7 @@ describe('lib/stepper.js', function () {
         setPWMFreq: sinon.spy(),
         setPin: sinon.spy()
       };
-      let inst = stepper({pwm: pwm, channel: 0, style: 'microstep', pps: 600});
+      let inst = stepper({pwm: pwm, pins: ports[0], style: 'microstep', pps: 600});
       inst.stepSync('back', 4 * 8);
       assert(check8MicroStep(pwm, 4 * 8, 0, 'back'));
     });
@@ -231,7 +253,7 @@ describe('lib/stepper.js', function () {
       setPWMFreq: sinon.spy(),
       setPin: sinon.spy()
     };
-    let inst = stepper({pwm: pwm, channel: 0, style: 'microstep', microsteps: 16});
+    let inst = stepper({pwm: pwm, pins: ports[0], style: 'microstep', microsteps: 16});
     let check16MicroStep = function (i, channel) {
       let p = ports[channel];
       let step2coils = [
@@ -250,9 +272,9 @@ describe('lib/stepper.js', function () {
         var pwmCall = (j - 1) * 2;
         var pinCall = (j - 1) * 4;
 
-        assert(pwm.setPWM.getCall(pwmCall + 0).calledWith(p.PWMA, 0, expectedPWM[j % 32] * 16));
+        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.PWMA, 0, expectedPWM[j % 32] * 16));
         assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.PWMB, 0, expectedPWM[(j + 16) % 32] * 16));
-        assert(pwm.setPin.getCall(pinCall + 0).calledWith(p.AIN2, step2coils[Math.floor(j / 16) % 4][0]));
+        assert(pwm.setPin.getCall(pinCall).calledWith(p.AIN2, step2coils[Math.floor(j / 16) % 4][0]));
         assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.BIN1, step2coils[Math.floor(j / 16) % 4][1]));
         assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.AIN1, step2coils[Math.floor(j / 16) % 4][2]));
         assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.BIN2, step2coils[Math.floor(j / 16) % 4][3]));
@@ -268,13 +290,7 @@ describe('lib/stepper.js', function () {
   });
 
   describe('interleaved stepping', function () {
-    let pwm = {
-      setPWM: sinon.spy(),
-      setPWMFreq: sinon.spy(),
-      setPin: sinon.spy()
-    };
-    let inst = stepper({pwm: pwm, channel: 0, style: 'interleaved', pps: 600});
-    let checkInterleavedStep = function (i, channel) {
+    let checkInterleavedStep = function (pwm, i, channel, dir) {
       let p = ports[channel];
       let step2coils = [
         [1, 0, 0, 0],
@@ -290,19 +306,37 @@ describe('lib/stepper.js', function () {
       for (let j = 1; j < i; j++) {
         var pwmCall = (j - 1) * 2;
         var pinCall = (j - 1) * 4;
-        assert(pwm.setPWM.getCall(pwmCall + 0).calledWith(p.PWMA, 0, 255 * 16));
+        var k = (dir === 'fwd') ? j : ((-j % 8) + 8);
+        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.PWMA, 0, 255 * 16));
         assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.PWMB, 0, 255 * 16));
-        assert(pwm.setPin.getCall(pinCall + 0).calledWith(p.AIN2, step2coils[j % 8][0]));
-        assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.BIN1, step2coils[j % 8][1]));
-        assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.AIN1, step2coils[j % 8][2]));
-        assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.BIN2, step2coils[j % 8][3]));
+        assert(pwm.setPin.getCall(pinCall).calledWith(p.AIN2, step2coils[k % 8][0]));
+        assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.BIN1, step2coils[k % 8][1]));
+        assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.AIN1, step2coils[k % 8][2]));
+        assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.BIN2, step2coils[k % 8][3]));
       }
       return true;
     };
 
-    it('should do 4 * 8 interleaved steps', function () {
+    it('should do 4 * 8 interleaved steps fwd', function () {
+      let pwm = {
+        setPWM: sinon.spy(),
+        setPWMFreq: sinon.spy(),
+        setPin: sinon.spy()
+      };
+      let inst = stepper({pwm: pwm, pins: ports[0], style: 'interleaved', pps: 600});
       inst.stepSync('fwd', 4 * 8);
-      assert(checkInterleavedStep(4 * 8, 0));
+      assert(checkInterleavedStep(pwm, 4 * 8, 0, 'fwd'));
+    });
+
+    it('should do 4 * 8 interleaved steps back', function () {
+      let pwm = {
+        setPWM: sinon.spy(),
+        setPWMFreq: sinon.spy(),
+        setPin: sinon.spy()
+      };
+      let inst = stepper({pwm: pwm, pins: ports[0], style: 'interleaved', rpm: 6000});
+      inst.stepSync('back', 4 * 8);
+      assert(checkInterleavedStep(pwm, 4 * 8, 0, 'back'));
     });
   });
 });

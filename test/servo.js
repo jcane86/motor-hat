@@ -18,39 +18,43 @@ describe('lib/servo.js', function () {
     }, Error, 'no errors thrown!');
   });
 
-  it('should require channel to initialize', function () {
+  it('should require pin to initialize', function () {
     assert.throws(function () {
       servo({pwm: pwm});
     }, Error, 'no errors thrown!');
   });
 
-  it('should require channels in [0,1,14,15]', function () {
+  it('should require pins in [0 to 15]', function () {
     assert.throws(function () {
-      servo({pwm: pwm, channel: 2});
+      servo({pwm: pwm, pin: 16});
+    }, Error, 'no errors thrown!');
+
+    assert.throws(function () {
+      servo({pwm: pwm, pin: -1});
     }, Error, 'no errors thrown!');
   });
 
   it('should require pwm instance to initialize', function () {
     assert.throws(function () {
-      servo({channel: 2});
+      servo({pin: 2});
     }, Error, 'no errors thrown!');
   });
 
   it('should initialize', function () {
     assert.doesNotThrow(function () {
-      servo({pwm: pwm, channel: 0});
+      servo({pwm: pwm, pin: 0});
     }, Error, 'it threw an error!');
   });
 
-  let inst = servo({pwm: pwm, channel: 0});
+  let inst = servo({pwm: pwm, pin: 0});
 
   it('should reject bad moveTo params', function () {
     assert.throws(function () {
-      servo({pwm: pwm, channel: 0}).moveTo(-1);
+      servo({pwm: pwm, pin: 0}).moveTo(-1);
     }, Error, 'no errors thrown!');
 
     assert.throws(function () {
-      servo({pwm: pwm, channel: 0}).moveTo(101);
+      servo({pwm: pwm, pin: 0}).moveTo(101);
     }, Error, 'no errors thrown!');
   });
 
@@ -82,11 +86,13 @@ describe('lib/servo.js', function () {
 
   describe('update servo calibrations', function () {
     let newFreq = 40;
-    let newMinCount = 1 * 40 * 4096 / 1000;
-    let newMaxCount = 2 * 40 * 4096 / 1000;
+    let minMs = 1;
+    let maxMs = 2;
+    let newMinCount = minMs * 40 * 4096 / 1000;
+    let newMaxCount = maxMs * 40 * 4096 / 1000;
 
     it('should recalibrate the max and min points and PWM frequency', function () {
-      inst.calibrate(40, 1, 2);
+      inst.calibrate(40, minMs, maxMs);
     });
 
     it('should set PWM freq on move with the new params', function () {
