@@ -5,20 +5,28 @@ let stepper = require('../lib/stepper.js');
 
 let ports = [{
   // channel 0 ports
-  PWMA: 8,
-  AIN2: 9,
-  AIN1: 10,
-  PWMB: 13,
-  BIN2: 12,
-  BIN1: 11
+  W1: {
+    PWM: 8,
+    IN1: 10,
+    IN2: 9
+  },
+  W2: {
+    PWM: 13,
+    IN2: 12,
+    IN1: 11
+  }
 }, {
   // channel 1 ports
-  PWMA: 2,
-  AIN2: 3,
-  AIN1: 4,
-  PWMB: 7,
-  BIN2: 6,
-  BIN1: 5
+  W1: {
+    PWM: 2,
+    IN2: 3,
+    IN1: 4
+  },
+  W2: {
+    PWM: 7,
+    IN2: 6,
+    IN1: 5
+  }
 }];
 
 describe('lib/stepper.js', function () {
@@ -32,37 +40,37 @@ describe('lib/stepper.js', function () {
     }, Error, 'no errors thrown!');
   });
 
-  it('should require 6 pins to initialize', function () {
+  it('should require W1 and W2 pins to initialize', function () {
     assert.throws(function () {
       stepper({pwm: {}});
     }, Error, 'no errors thrown!');
 
     assert.throws(function () {
-      stepper({pwm: {}, pins: 1});
+      stepper({pwm: {}, pins: {W1: [0, 1, 2]}});
     }, Error, 'no errors thrown!');
 
     assert.throws(function () {
-      stepper({pwm: {}, pins: [10]});
+      stepper({pwm: {}, pins: {W2: [0, 1, 2]}});
     }, Error, 'no errors thrown!');
   });
 
   it('should require exactly 6 pins', function () {
     assert.throws(function () {
-      stepper({pwm: {}, pins: [0, 1, 2, 3, 4, 5, 6]});
+      stepper({pwm: {}, pins: {W1: [0, 1, 2], W2: [3, 4, 5, 6]}});
     }, Error, 'no errors thrown!');
 
     assert.throws(function () {
-      stepper({pwm: {}, pins: [0, 1, 2, 3, 4]});
+      stepper({pwm: {}, pins: {W1: [0, 1], W2: [2, 3, 4]}});
     }, Error, 'no errors thrown!');
   });
 
   it('should require pins in [0 to 15]', function () {
     assert.throws(function () {
-      stepper({pwm: {}, pins: [16, 1, 2, 3, 4, 5]});
+      stepper({pwm: {}, pins: {W1: [16, 1, 2], W2: [3, 4, 5]}});
     }, Error, 'no errors thrown!');
 
     assert.throws(function () {
-      stepper({pwm: {}, pins: [-1, 3, 4, 5, 6, 7]});
+      stepper({pwm: {}, pins: {W1: [-1, 3, 4], W2: [5, 6, 7]}});
     }, Error, 'no errors thrown!');
   });
 
@@ -103,12 +111,12 @@ describe('lib/stepper.js', function () {
           step = (-(j + 1) + 4) % 4;
         }
 
-        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.PWMA, 0, 255 * 16));
-        assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.PWMB, 0, 255 * 16));
-        assert(pwm.setPin.getCall(pinCall).calledWith(p.AIN2, step2coils[step][0]));
-        assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.BIN1, step2coils[step][1]));
-        assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.AIN1, step2coils[step][2]));
-        assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.BIN2, step2coils[step][3]));
+        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.W1.PWM, 0, 255 * 16));
+        assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.W2.PWM, 0, 255 * 16));
+        assert(pwm.setPin.getCall(pinCall).calledWith(p.W1.IN2, step2coils[step][0]));
+        assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.W2.IN1, step2coils[step][1]));
+        assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.W1.IN1, step2coils[step][2]));
+        assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.W2.IN2, step2coils[step][3]));
       }
       return true;
     };
@@ -119,7 +127,7 @@ describe('lib/stepper.js', function () {
         setPWMFreq: sinon.spy(),
         setPin: sinon.spy()
       };
-      let inst = stepper({pwm: pwm, pins: ports[0], pps: 600});
+      let inst = stepper({pwm: pwm, pins: {W1: [8, 10, 9], W2: [13, 11, 12]}, pps: 600});
       inst.stepSync('fwd', 4);
       assert(checkDoubleStep(pwm, 4, 0, 'fwd'));
     });
@@ -154,12 +162,12 @@ describe('lib/stepper.js', function () {
         if (dir === 'back') {
           step = (-(j) + 4) % 4;
         }
-        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.PWMA, 0, 255 * 16));
-        assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.PWMB, 0, 255 * 16));
-        assert(pwm.setPin.getCall(pinCall).calledWith(p.AIN2, step2coils[step][0]));
-        assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.BIN1, step2coils[step][1]));
-        assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.AIN1, step2coils[step][2]));
-        assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.BIN2, step2coils[step][3]));
+        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.W1.PWM, 0, 255 * 16));
+        assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.W2.PWM, 0, 255 * 16));
+        assert(pwm.setPin.getCall(pinCall).calledWith(p.W1.IN2, step2coils[step][0]));
+        assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.W2.IN1, step2coils[step][1]));
+        assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.W1.IN1, step2coils[step][2]));
+        assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.W2.IN2, step2coils[step][3]));
       }
       return true;
     };
@@ -214,12 +222,12 @@ describe('lib/stepper.js', function () {
           pwmstepA = ((-(j) % 16) + 16) % 16;
           pwmstepB = (((-j + 8) % 16) + 16) % 16;
         }
-        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.PWMA, 0, expectedPWM[pwmstepA] * 16));
-        assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.PWMB, 0, expectedPWM[pwmstepB] * 16));
-        assert(pwm.setPin.getCall(pinCall).calledWith(p.AIN2, step2coils[step][0]));
-        assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.BIN1, step2coils[step][1]));
-        assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.AIN1, step2coils[step][2]));
-        assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.BIN2, step2coils[step][3]));
+        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.W1.PWM, 0, expectedPWM[pwmstepA] * 16));
+        assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.W2.PWM, 0, expectedPWM[pwmstepB] * 16));
+        assert(pwm.setPin.getCall(pinCall).calledWith(p.W1.IN2, step2coils[step][0]));
+        assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.W2.IN1, step2coils[step][1]));
+        assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.W1.IN1, step2coils[step][2]));
+        assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.W2.IN2, step2coils[step][3]));
       }
       return true;
     };
@@ -272,12 +280,12 @@ describe('lib/stepper.js', function () {
         var pwmCall = (j - 1) * 2;
         var pinCall = (j - 1) * 4;
 
-        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.PWMA, 0, expectedPWM[j % 32] * 16));
-        assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.PWMB, 0, expectedPWM[(j + 16) % 32] * 16));
-        assert(pwm.setPin.getCall(pinCall).calledWith(p.AIN2, step2coils[Math.floor(j / 16) % 4][0]));
-        assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.BIN1, step2coils[Math.floor(j / 16) % 4][1]));
-        assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.AIN1, step2coils[Math.floor(j / 16) % 4][2]));
-        assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.BIN2, step2coils[Math.floor(j / 16) % 4][3]));
+        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.W1.PWM, 0, expectedPWM[j % 32] * 16));
+        assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.W2.PWM, 0, expectedPWM[(j + 16) % 32] * 16));
+        assert(pwm.setPin.getCall(pinCall).calledWith(p.W1.IN2, step2coils[Math.floor(j / 16) % 4][0]));
+        assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.W2.IN1, step2coils[Math.floor(j / 16) % 4][1]));
+        assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.W1.IN1, step2coils[Math.floor(j / 16) % 4][2]));
+        assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.W2.IN2, step2coils[Math.floor(j / 16) % 4][3]));
       }
       return true;
     };
@@ -307,12 +315,12 @@ describe('lib/stepper.js', function () {
         var pwmCall = (j - 1) * 2;
         var pinCall = (j - 1) * 4;
         var k = (dir === 'fwd') ? j : ((-j % 8) + 8);
-        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.PWMA, 0, 255 * 16));
-        assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.PWMB, 0, 255 * 16));
-        assert(pwm.setPin.getCall(pinCall).calledWith(p.AIN2, step2coils[k % 8][0]));
-        assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.BIN1, step2coils[k % 8][1]));
-        assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.AIN1, step2coils[k % 8][2]));
-        assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.BIN2, step2coils[k % 8][3]));
+        assert(pwm.setPWM.getCall(pwmCall).calledWith(p.W1.PWM, 0, 255 * 16));
+        assert(pwm.setPWM.getCall(pwmCall + 1).calledWith(p.W2.PWM, 0, 255 * 16));
+        assert(pwm.setPin.getCall(pinCall).calledWith(p.W1.IN2, step2coils[k % 8][0]));
+        assert(pwm.setPin.getCall(pinCall + 1).calledWith(p.W2.IN1, step2coils[k % 8][1]));
+        assert(pwm.setPin.getCall(pinCall + 2).calledWith(p.W1.IN1, step2coils[k % 8][2]));
+        assert(pwm.setPin.getCall(pinCall + 3).calledWith(p.W2.IN2, step2coils[k % 8][3]));
       }
       return true;
     };

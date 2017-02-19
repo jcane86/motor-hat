@@ -1,6 +1,6 @@
 'use strict';
 let assert = require('assert');
-let motorHat = require('../lib/index.js');
+let motorHat = require('./stubindex.js');
 
 describe('motor-hat', function () {
   it('should have constructor', function () {
@@ -10,7 +10,7 @@ describe('motor-hat', function () {
   it('should respect max number of steppers', function () {
     assert.throws(function () {
       motorHat({
-        steppers: [2]
+        steppers: [['M5', 'M1']]
       });
     }, Error, 'Error was not thrown!');
   });
@@ -18,7 +18,7 @@ describe('motor-hat', function () {
   it('should respect max number of DC motors', function () {
     assert.throws(function () {
       motorHat({
-        dc: [4]
+        dcs: ['M5']
       });
     }, Error, 'Error was not thrown!');
   });
@@ -26,7 +26,7 @@ describe('motor-hat', function () {
   it('should respect max number of servos', function () {
     assert.throws(function () {
       motorHat({
-        servos: [4]
+        servos: [16]
       });
     }, Error, 'Error was not thrown!');
   });
@@ -34,20 +34,20 @@ describe('motor-hat', function () {
   it('should respect motor overlappings', function () {
     assert.throws(function () {
       motorHat({
-        steppers: [0],
-        dc: [0]
+        steppers: [['M1', 'M2']],
+        dcs: ['M1']
       });
     }, Error, 'Error was not thrown!');
 
     assert.throws(function () {
       motorHat({
-        dc: [1, 1]
+        dcs: ['M1', 'M1']
       });
     }, Error, 'Error was not thrown!');
 
     assert.throws(function () {
       motorHat({
-        steppers: [1, 1]
+        steppers: [['M1', 'M2'], ['M2', 'M3']]
       });
     }, Error, 'Error was not thrown!');
 
@@ -61,8 +61,8 @@ describe('motor-hat', function () {
   it('should respect correct motor definitions', function () {
     assert.doesNotThrow(function () {
       motorHat({
-        stepper: [0],
-        dc: [2],
+        steppers: [{W1: 'M1', W2: 'M2'}],
+        dcs: ['M3', 'M4'],
         servos: [0]
       });
     });
