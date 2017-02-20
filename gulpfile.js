@@ -72,7 +72,7 @@ gulp.task('babel', ['clean'], function () {
 });
 
 gulp.task('clean', function () {
-  return del('dist');
+  return del('dist/*');
 });
 
 gulp.task('prepublish', ['nsp', 'babel']);
