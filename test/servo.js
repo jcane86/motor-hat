@@ -2,7 +2,7 @@
 require('should');
 require('should-sinon');
 let sinon = require('sinon');
-let servo = require('../lib/servo.js');
+let servo = require('../dist/servo.js');
 let pwm = {
   setPWM: sinon.spy(),
   setPWMFreq: sinon.spy()

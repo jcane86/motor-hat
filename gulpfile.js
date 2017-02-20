@@ -27,8 +27,8 @@ gulp.task('nsp', function (cb) {
   nsp({package: path.resolve('package.json')}, cb);
 });
 
-gulp.task('pre-test', function () {
-  return gulp.src('lib/**/*.js')
+gulp.task('pre-test', ['babel'], function () {
+  return gulp.src('dist/**/*.js')
     .pipe(excludeGitignore())
     .pipe(istanbul({
       includeUntested: true,

@@ -3,7 +3,7 @@ let sinon = require('sinon');
 require('should');
 require('should-sinon');
 let proxyquire = require('proxyquire');
-let pwm = proxyquire('../lib/pwm.js', {'raspi-ver': {rev: 0, '@noCallThru': true}});
+let pwm = proxyquire('../dist/pwm.js', {'raspi-ver': {rev: 0, '@noCallThru': true}});
 
 describe('lib/pwm.js', function () {
   describe('exports', function () {

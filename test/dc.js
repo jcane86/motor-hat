@@ -2,7 +2,7 @@
 let sinon = require('sinon');
 require('should');
 require('should-sinon');
-let dc = require('../lib/dc.js');
+let dc = require('../dist/dc.js');
 let pwm = require('./stubpwm.js')({i2c: require('./stubi2c.js')});
 
 let ports = {

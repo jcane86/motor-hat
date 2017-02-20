@@ -2,7 +2,7 @@
 require('should');
 require('should-sinon');
 let sinon = require('sinon');
-let stepper = require('../lib/stepper.js');
+let stepper = require('../dist/stepper.js');
 
 let ports = [{
   // channel 0 ports
