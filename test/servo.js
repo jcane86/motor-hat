@@ -1,5 +1,6 @@
 'use strict';
-let assert = require('assert');
+require('should');
+require('should-sinon');
 let sinon = require('sinon');
 let servo = require('../lib/servo.js');
 let pwm = {
@@ -9,53 +10,53 @@ let pwm = {
 
 describe('lib/servo.js', function () {
   it('should have constructor', function () {
-    assert(typeof servo === 'function', 'servo is not of type "function"');
+    servo.should.be.type('function');
   });
 
   it('should require options object to initialize', function () {
-    assert.throws(function () {
+    (function () {
       servo();
-    }, Error, 'no errors thrown!');
+    }).should.throw();
   });
 
   it('should require pin to initialize', function () {
-    assert.throws(function () {
+    (function () {
       servo({pwm: pwm});
-    }, Error, 'no errors thrown!');
+    }).should.throw();
   });
 
   it('should require pins in [0 to 15]', function () {
-    assert.throws(function () {
+    (function () {
       servo({pwm: pwm, pin: 16});
-    }, Error, 'no errors thrown!');
+    }).should.throw();
 
-    assert.throws(function () {
+    (function () {
       servo({pwm: pwm, pin: -1});
-    }, Error, 'no errors thrown!');
+    }).should.throw();
   });
 
   it('should require pwm instance to initialize', function () {
-    assert.throws(function () {
+    (function () {
       servo({pin: 2});
-    }, Error, 'no errors thrown!');
+    }).should.throw();
   });
 
   it('should initialize', function () {
-    assert.doesNotThrow(function () {
+    (function () {
       servo({pwm: pwm, pin: 0});
-    }, Error, 'it threw an error!');
+    }).should.not.throw();
   });
 
   let inst = servo({pwm: pwm, pin: 0});
 
   it('should reject bad moveTo params', function () {
-    assert.throws(function () {
+    (function () {
       servo({pwm: pwm, pin: 0}).moveTo(-1);
-    }, Error, 'no errors thrown!');
+    }).should.throw();
 
-    assert.throws(function () {
+    (function () {
       servo({pwm: pwm, pin: 0}).moveTo(101);
-    }, Error, 'no errors thrown!');
+    }).should.throw();
   });
 
   describe('default servo calibration', function () {
@@ -65,22 +66,22 @@ describe('lib/servo.js', function () {
 
     it('should set PWM freq on move', function () {
       inst.moveTo(0);
-      assert(pwm.setPWMFreq.calledWith(defFreq), 'pwm.setPWMFreq should have been called with default freq :' + defFreq);
+      pwm.setPWMFreq.should.be.calledWith(defFreq);
     });
 
     it('should move to 0', function () {
       inst.moveTo(0);
-      assert(pwm.setPWM.calledWith(0, 0, defMinCount), 'pwm.setPWM should have been called with default minCount:' + defMinCount);
+      pwm.setPWM.should.be.calledWith(0, 0, defMinCount);
     });
 
     it('should move to 100', function () {
       inst.moveTo(100);
-      assert(pwm.setPWM.calledWith(0, 0, defMaxCount), 'pwm.setPWM should have been called with default maxCount:' + defMaxCount);
+      pwm.setPWM.should.be.calledWith(0, 0, defMaxCount);
     });
 
     it('should move to 50', function () {
       inst.moveTo(50);
-      assert(pwm.setPWM.calledWith(0, 0, (defMaxCount + defMinCount) / 2), 'pwm.setPWM should have been called with 50%');
+      pwm.setPWM.should.be.calledWith(0, 0, (defMaxCount + defMinCount) / 2);
     });
   });
 
@@ -97,22 +98,22 @@ describe('lib/servo.js', function () {
 
     it('should set PWM freq on move with the new params', function () {
       inst.moveTo(0);
-      assert(pwm.setPWMFreq.calledWith(newFreq), 'pwm.setPWMFreq should have been called with default freq :' + newFreq);
+      pwm.setPWMFreq.should.be.calledWith(newFreq);
     });
 
     it('should move to 0 with the new params', function () {
       inst.moveTo(0);
-      assert(pwm.setPWM.calledWith(0, 0, newMinCount), 'pwm.setPWM should have been called with default minCount:' + newMinCount);
+      pwm.setPWM.should.be.calledWith(0, 0, newMinCount);
     });
 
     it('should move to 100 with the new params', function () {
       inst.moveTo(100);
-      assert(pwm.setPWM.calledWith(0, 0, newMaxCount), 'pwm.setPWM should have been called with default maxCount:' + newMaxCount);
+      pwm.setPWM.should.be.calledWith(0, 0, newMaxCount);
     });
 
     it('should move to 50 with the new params', function () {
       inst.moveTo(50);
-      assert(pwm.setPWM.calledWith(0, 0, (newMaxCount + newMinCount) / 2), 'pwm.setPWM should have been called with 50%');
+      pwm.setPWM.should.be.calledWith(0, 0, (newMaxCount + newMinCount) / 2);
     });
   });
 });

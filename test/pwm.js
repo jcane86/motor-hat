@@ -1,5 +1,4 @@
 'use strict';
-let assert = require('assert');
 let sinon = require('sinon');
 require('should');
 require('should-sinon');
@@ -23,30 +22,30 @@ describe('lib/pwm.js', function () {
     });
 
     it('should have constructor', function () {
-      assert(typeof pwm === 'function', 'pwm is not of type "function"');
+      pwm.should.be.type('function');
     });
 
     it('should require options object to initialize', function () {
-      assert.throws(function () {
+      (function () {
         pwm();
-      }, Error, 'no errors thrown!');
+      }).should.throw();
     });
 
     it('should require i2c object to initialize', function () {
-      assert.throws(function () {
+      (function () {
         pwm({i2c: undefined});
-      }, Error, 'no errors thrown!');
+      }).should.throw();
     });
 
     it('should initialize', function () {
-      assert.doesNotThrow(function () {
+      (function () {
         try {
           pwm({i2c: i2c});
         } catch (e) {
           console.log(e);
           throw e;
         }
-      }, Error, 'it threw an error!');
+      }).should.not.throw();
     });
   });
 
