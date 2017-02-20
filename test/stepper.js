@@ -3,6 +3,16 @@ require('should');
 require('should-sinon');
 let sinon = require('sinon');
 let stepper = require('../dist/stepper.js');
+let pwm = {
+  setPWM: sinon.spy(),
+  setPWMFreq: sinon.spy(),
+  setPin: sinon.spy(),
+  resetAll: function () {
+    pwm.setPWM.reset();
+    pwm.setPWMFreq.reset();
+    pwm.setPin.reset();
+  }
+};
 
 let ports = [{
   // channel 0 ports
@@ -94,6 +104,10 @@ describe('lib/stepper.js', function () {
   });
 
   describe('double stepping (by default)', function () {
+    beforeEach(function () {
+      pwm.resetAll();
+    });
+
     let checkDoubleStep = function (pwm, i, channel, dir) {
       let p = ports[channel];
       let step2coils = [
@@ -123,38 +137,21 @@ describe('lib/stepper.js', function () {
     };
 
     it('should do 4 double steps fwd', function () {
-      let pwm = {
-        setPWM: sinon.spy(),
-        setPWMFreq: sinon.spy(),
-        setPin: sinon.spy()
-      };
       let inst = stepper({pwm: pwm, pins: {W1: [8, 10, 9], W2: [13, 11, 12]}, pps: 600});
       inst.stepSync('fwd', 4);
       checkDoubleStep(pwm, 4, 0, 'fwd');
     });
 
     it('should do 4 double steps back', function () {
-      let pwm = {
-        setPWM: sinon.spy(),
-        setPWMFreq: sinon.spy(),
-        setPin: sinon.spy()
-      };
-      let inst = stepper({pwm: pwm, pins: ports[0], pps: 600});
+      let inst = stepper({pwm: pwm, pins: {W1: [8, 10, 9], W2: [13, 11, 12]}, pps: 600});
       inst.stepSync('back', 4);
       checkDoubleStep(pwm, 4, 0, 'back');
     });
   });
 
   describe('single stepping', function () {
-    let pwm = {
-      setPWM: sinon.spy(),
-      setPWMFreq: sinon.spy(),
-      setPin: sinon.spy()
-    };
     beforeEach(function () {
-      pwm.setPWM.reset();
-      pwm.setPWMFreq.reset();
-      pwm.setPin.reset();
+      pwm.resetAll();
     });
 
     let checkSingleStep = function (pwm, i, channel, dir) {
@@ -198,15 +195,8 @@ describe('lib/stepper.js', function () {
   });
 
   describe('8 microstepping', function () {
-    let pwm = {
-      setPWM: sinon.spy(),
-      setPWMFreq: sinon.spy(),
-      setPin: sinon.spy()
-    };
     beforeEach(function () {
-      pwm.setPWM.reset();
-      pwm.setPWMFreq.reset();
-      pwm.setPin.reset();
+      pwm.resetAll();
     });
 
     let check8MicroStep = function (pwm, i, channel, dir) {
@@ -263,12 +253,9 @@ describe('lib/stepper.js', function () {
   });
 
   describe('16 microstepping', function () {
-    let pwm = {
-      setPWM: sinon.spy(),
-      setPWMFreq: sinon.spy(),
-      setPin: sinon.spy()
-    };
-    let inst = stepper({pwm: pwm, pins: ports[0], style: 'microstep', microsteps: 16});
+    beforeEach(function () {
+      pwm.resetAll();
+    });
     let check16MicroStep = function (i, channel) {
       let p = ports[channel];
       let step2coils = [
@@ -296,9 +283,10 @@ describe('lib/stepper.js', function () {
       }
       return true;
     };
-    inst.setSpeed({pps: 6000});
 
     it('should do 4 * 16 microsteps', function () {
+      let inst = stepper({pwm: pwm, pins: ports[0], style: 'microstep', microsteps: 16});
+      inst.setSpeed({pps: 6000});
       for (let j = 1; j < 4; j++) {
         inst.stepSync('fwd', 16);
         check16MicroStep(16, 0).should.be.true();
@@ -307,15 +295,8 @@ describe('lib/stepper.js', function () {
   });
 
   describe('interleaved stepping', function () {
-    let pwm = {
-      setPWM: sinon.spy(),
-      setPWMFreq: sinon.spy(),
-      setPin: sinon.spy()
-    };
     beforeEach(function () {
-      pwm.setPWM.reset();
-      pwm.setPWMFreq.reset();
-      pwm.setPin.reset();
+      pwm.resetAll();
     });
     let checkInterleavedStep = function (pwm, i, channel, dir) {
       let p = ports[channel];
