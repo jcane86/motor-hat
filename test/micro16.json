@@ -1,0 +1,199 @@
+[
+  {
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 4048, "PWMB": 400
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 4000, "PWMB": 800
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 3904, "PWMB": 1184
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 3776, "PWMB": 1568
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 3600, "PWMB": 1920
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 3392, "PWMB": 2256
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 3152, "PWMB": 2592
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 2880, "PWMB": 2880
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 2592, "PWMB": 3152
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 2256, "PWMB": 3392
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 1920, "PWMB": 3600
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 1568, "PWMB": 3776
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 1184, "PWMB": 3904
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 800, "PWMB": 4000
+},
+{
+  "PWMA": 400, "PWMB": 4048, "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 0, "PWMB": 4080
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 400, "PWMB": 4048
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 800, "PWMB": 4000
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 1184, "PWMB": 3904
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 1568, "PWMB": 3776
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 1920, "PWMB": 3600
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 2256, "PWMB": 3392
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 2592, "PWMB": 3152
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 2880, "PWMB": 2880
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 3152, "PWMB": 2592
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 3392, "PWMB": 2256
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 3600, "PWMB": 1920
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 3776, "PWMB": 1568
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 3904, "PWMB": 1184
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 4000, "PWMB": 800
+},
+{
+    "AIN2": 0, "BIN1": 1, "AIN1": 1, "BIN2": 0, "PWMA": 4048, "PWMB": 400
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 4080, "PWMB": 0
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 4048, "PWMB": 400
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 4000, "PWMB": 800
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 3904, "PWMB": 1184
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 3776, "PWMB": 1568
+},
+  {
+    "AIN2": 0,
+    "BIN1": 0,
+    "AIN1": 1,
+    "BIN2": 1,
+    "PWMA": 3600,
+    "PWMB": 1920
+  },
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 3392, "PWMB": 2256
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 3152, "PWMB": 2592
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 2880, "PWMB": 2880
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 2592, "PWMB": 3152
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 2256, "PWMB": 3392
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 1920, "PWMB": 3600
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 1568, "PWMB": 3776
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 1184, "PWMB": 3904
+},
+{
+    "AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 800, "PWMB": 4000
+},
+{
+"AIN2": 0, "BIN1": 0, "AIN1": 1, "BIN2": 1, "PWMA": 400, "PWMB": 4048
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 0, "PWMB": 4080
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 400, "PWMB": 4048
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 800, "PWMB": 4000
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 1184, "PWMB": 3904
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 1568, "PWMB": 3776
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1 ,"PWMA": 1920, "PWMB": 3600
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 2256, "PWMB": 3392
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 2592, "PWMB": 3152
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 2880, "PWMB": 2880
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 3152, "PWMB": 2592
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 3392, "PWMB": 2256
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 3600, "PWMB": 1920
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 3776, "PWMB": 1568
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 3904, "PWMB": 1184
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 4000, "PWMB": 800
+},
+{
+    "AIN2": 1, "BIN1": 0, "AIN1": 0, "BIN2": 1, "PWMA": 4048, "PWMB": 400
+},
+{
+    "AIN2": 1, "BIN1": 1, "AIN1": 0, "BIN2": 0, "PWMA": 4080, "PWMB": 0
+}
+]

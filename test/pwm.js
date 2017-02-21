@@ -88,7 +88,7 @@ describe('lib/pwm.js', function () {
   });
 
   describe('softwareReset()', function () {
-    it('should send a software reset (SWRST) command to all servo drivers on the bus', function () {
+    it('should send a software reset (SWRST) command to all servolib drivers on the bus', function () {
       pwm({i2c: i2c}).softwareReset();
       i2c.bus.sendByteSync.should.be.calledOnce();
       i2c.bus.sendByteSync.should.be.calledWith(0x00, 0x06);
@@ -118,6 +118,18 @@ describe('lib/pwm.js', function () {
 
     it('should set clear reset flag', function () {
       i2c.bus.writeByteSync.getCall(i++).should.be.calledWith(addr, 0x00, 0xBEE | 0x80);
+    });
+  });
+
+  describe('getPWMFreq()', function () {
+    let addr = 0x40;
+
+    let instance = pwm({i2c: i2c, address: addr});
+    i2c.resetAll();
+
+    it('should read prescale val', function () {
+      instance.getPWMFreq();
+      i2c.bus.readByteSync.should.be.calledWith(addr, 0xFE);
     });
   });
 

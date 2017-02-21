@@ -13,7 +13,7 @@ let ports = {
   }
 };
 
-describe('lib/dc.js', function () {
+describe('lib/dclib.js', function () {
   it('should have constructor', function () {
     dc.should.be.type('function');
   });

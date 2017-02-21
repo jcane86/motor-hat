@@ -1,6 +1,7 @@
 'use strict';
 require('should');
 require('should-sinon');
+let debug = require('debug')('motor-hat:test');
 let sinon = require('sinon');
 let stepper = require('../dist/stepper.js');
 let pwm = {
@@ -40,7 +41,44 @@ let ports = [{
   }
 }];
 
-describe('lib/stepper.js', function () {
+let checkExpected = function (json, pwm, p, steps) {
+  var expected = require(json);
+  expected[-1] = {PWMA: -1, PWMB: -1, AIN1: -1, AIN2: -1, BIN1: -1, BIN2: -1};
+  let step = 0;
+  let pwmcall = 0;
+  let pincall = 0;
+  while (steps--) {
+    if (expected[step].PWMA !== expected[step - 1].PWMA) {
+      pwm.setPWM.getCall(pwmcall++).args.should.deepEqual([p.W1.PWM, 0, expected[step].PWMA]);
+    }
+    if (expected[step].PWMB !== expected[step - 1].PWMB) {
+      pwm.setPWM.getCall(pwmcall++).args.should.deepEqual([p.W2.PWM, 0, expected[step].PWMB]);
+    }
+    if (expected[step].AIN2 !== expected[step - 1].AIN2) {
+      debug(pincall);
+      debug(pwm.setPin.getCall(pincall).args);
+      pwm.setPin.getCall(pincall++).args.should.deepEqual([p.W1.IN2, expected[step].AIN2]);
+    }
+    if (expected[step].BIN1 !== expected[step - 1].BIN1) {
+      debug(pincall);
+      debug(pwm.setPin.getCall(pincall).args);
+      pwm.setPin.getCall(pincall++).args.should.deepEqual([p.W2.IN1, expected[step].BIN1]);
+    }
+    if (expected[step].AIN1 !== expected[step - 1].AIN1) {
+      debug(pincall);
+      debug(pwm.setPin.getCall(pincall).args);
+      pwm.setPin.getCall(pincall++).args.should.deepEqual([p.W1.IN1, expected[step].AIN1]);
+    }
+    if (expected[step].BIN2 !== expected[step - 1].BIN2) {
+      debug(pincall);
+      debug(pwm.setPin.getCall(pincall).args);
+      pwm.setPin.getCall(pincall++).args.should.deepEqual([p.W2.IN2, expected[step].BIN2]);
+    }
+    step++;
+  }
+};
+
+describe('lib/stepperlib.js', function () {
   it('should have constructor', function () {
     stepper.should.be.type('function');
   });
@@ -108,44 +146,24 @@ describe('lib/stepper.js', function () {
       pwm.resetAll();
     });
 
-    let checkDoubleStep = function (pwm, i, channel, dir) {
-      let p = ports[channel];
-      let step2coils = [
-        [1, 1, 0, 0],
-        [0, 1, 1, 0],
-        [0, 0, 1, 1],
-        [1, 0, 0, 1]
-      ];
-
-      for (let j = 0; j < i; j++) {
-        var pwmCall = j * 2;
-        var pinCall = j * 4;
-
-        let step = j % 4;
-        if (dir === 'back') {
-          step = (-(j + 1) + 4) % 4;
-        }
-
-        pwm.setPWM.getCall(pwmCall).args.should.deepEqual([p.W1.PWM, 0, 255 * 16]);
-        pwm.setPWM.getCall(pwmCall + 1).args.should.deepEqual([p.W2.PWM, 0, 255 * 16]);
-        pwm.setPin.getCall(pinCall).args.should.deepEqual([p.W1.IN2, step2coils[step][0]]);
-        pwm.setPin.getCall(pinCall + 1).args.should.deepEqual([p.W2.IN1, step2coils[step][1]]);
-        pwm.setPin.getCall(pinCall + 2).args.should.deepEqual([p.W1.IN1, step2coils[step][2]]);
-        pwm.setPin.getCall(pinCall + 3).args.should.deepEqual([p.W2.IN2, step2coils[step][3]]);
-      }
-      return true;
-    };
+    var steps = 4;
+    let p = {W1: [8, 10, 9], W2: [13, 11, 12]};
+    var po = p;
+    po.W1 = {PWM: p.W1[0], IN1: p.W1[1], IN2: p.W1[2]};
+    po.W2 = {PWM: p.W2[0], IN1: p.W2[1], IN2: p.W2[2]};
 
     it('should do 4 double steps fwd', function () {
-      let inst = stepper({pwm: pwm, pins: {W1: [8, 10, 9], W2: [13, 11, 12]}, pps: 600});
-      inst.stepSync('fwd', 4);
-      checkDoubleStep(pwm, 4, 0, 'fwd');
+      let inst = stepper({pwm: pwm, pins: p, pps: 600});
+      inst.stepSync('fwd', steps);
+
+      checkExpected('./doublefwd.json', pwm, po, steps);
     });
 
     it('should do 4 double steps back', function () {
-      let inst = stepper({pwm: pwm, pins: {W1: [8, 10, 9], W2: [13, 11, 12]}, pps: 600});
-      inst.stepSync('back', 4);
-      checkDoubleStep(pwm, 4, 0, 'back');
+      let inst = stepper({pwm: pwm, pins: p, pps: 600});
+      inst.stepSync('back', steps);
+
+      checkExpected('./doubleback.json', pwm, po, steps);
     });
   });
 
@@ -154,43 +172,22 @@ describe('lib/stepper.js', function () {
       pwm.resetAll();
     });
 
-    let checkSingleStep = function (pwm, i, channel, dir) {
-      let p = ports[channel];
-      let step2coils = [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1]
-      ];
-
-      for (let j = 1; j < i; j++) {
-        var pwmCall = (j - 1) * 2;
-        var pinCall = (j - 1) * 4;
-
-        let step = j % 4;
-        if (dir === 'back') {
-          step = (-(j) + 4) % 4;
-        }
-        pwm.setPWM.getCall(pwmCall).args.should.deepEqual([p.W1.PWM, 0, 255 * 16]);
-        pwm.setPWM.getCall(pwmCall + 1).args.should.deepEqual([p.W2.PWM, 0, 255 * 16]);
-        pwm.setPin.getCall(pinCall).args.should.deepEqual([p.W1.IN2, step2coils[step][0]]);
-        pwm.setPin.getCall(pinCall + 1).args.should.deepEqual([p.W2.IN1, step2coils[step][1]]);
-        pwm.setPin.getCall(pinCall + 2).args.should.deepEqual([p.W1.IN1, step2coils[step][2]]);
-        pwm.setPin.getCall(pinCall + 3).args.should.deepEqual([p.W2.IN2, step2coils[step][3]]);
-      }
-      return true;
-    };
+    let channel = 0;
+    var steps = 4;
+    let p = ports[channel];
 
     it('should do 4 single steps fwd', function () {
-      let inst = stepper({pwm: pwm, pins: ports[0], style: 'single', pps: 600});
-      inst.stepSync('fwd', 4);
-      checkSingleStep(pwm, 4, 0, 'fwd');
+      let inst = stepper({pwm: pwm, pins: p, style: 'single', pps: 600});
+      inst.stepSync('fwd', steps);
+
+      checkExpected('./singlefwd.json', pwm, p, steps);
     });
 
     it('should do 4 single steps back', function () {
-      let inst = stepper({pwm: pwm, pins: ports[0], style: 'single', pps: 600});
-      inst.stepSync('back', 4);
-      checkSingleStep(pwm, 4, 0, 'back');
+      let inst = stepper({pwm: pwm, pins: p, style: 'single', pps: 600});
+      inst.stepSync('back', steps);
+
+      checkExpected('./singleback.json', pwm, p, steps);
     });
   });
 
@@ -199,56 +196,22 @@ describe('lib/stepper.js', function () {
       pwm.resetAll();
     });
 
-    let check8MicroStep = function (pwm, i, channel, dir) {
-      let p = ports[channel];
-      let step2coils = [
-        [1, 1, 0, 0],
-        [0, 1, 1, 0],
-        [0, 0, 1, 1],
-        [1, 0, 0, 1]
-      ];
-
-      let expectedPWM = [
-        255, 250, 236, 212, 180, 142, 98, 50,
-        0, 50, 98, 142, 180, 212, 236, 250
-      ];
-
-      for (let j = 1; j < i; j++) {
-        var pwmCall = (j - 1) * 2;
-        var pinCall = (j - 1) * 4;
-
-        let step = Math.floor((j / 8) % 4);
-        let pwmstepA = j % 16;
-        let pwmstepB = (j + 8) % 16;
-        if (dir === 'back') {
-          step = Math.floor(((-j / 8) + 4) % 4);
-          pwmstepA = ((-(j) % 16) + 16) % 16;
-          pwmstepB = (((-j + 8) % 16) + 16) % 16;
-        }
-        pwm.setPWM.getCall(pwmCall).args.should.deepEqual([p.W1.PWM, 0, expectedPWM[pwmstepA] * 16]);
-        pwm.setPWM.getCall(pwmCall + 1).args.should.deepEqual([p.W2.PWM, 0, expectedPWM[pwmstepB] * 16]);
-        pwm.setPin.getCall(pinCall).args.should.deepEqual([p.W1.IN2, step2coils[step][0]]);
-        pwm.setPin.getCall(pinCall + 1).args.should.deepEqual([p.W2.IN1, step2coils[step][1]]);
-        pwm.setPin.getCall(pinCall + 2).args.should.deepEqual([p.W1.IN1, step2coils[step][2]]);
-        pwm.setPin.getCall(pinCall + 3).args.should.deepEqual([p.W2.IN2, step2coils[step][3]]);
-      }
-      return true;
-    };
+    let channel = 0;
+    var steps = 4 * 8;
+    let p = ports[channel];
 
     it('should do 4 * 8 microsteps fwd', function () {
-      let inst = stepper({pwm: pwm, pins: ports[0], style: 'microstep', pps: 600});
-      for (let j = 1; j < 4; j++) {
-        inst.stepSync('fwd', 8);
-        check8MicroStep(pwm, 8, 0, 'fwd').should.be.true();
-      }
+      let inst = stepper({pwm: pwm, pins: p, style: 'microstep', pps: 600});
+      inst.stepSync('fwd', steps);
+
+      checkExpected('./micro8fwd.json', pwm, p, steps);
     });
 
     it('should do 4 * 8 microsteps back', function () {
-      let inst = stepper({pwm: pwm, pins: ports[0], style: 'microstep', pps: 600});
-      for (let j = 1; j < 4; j++) {
-        inst.stepSync('back', 8);
-        check8MicroStep(pwm, 8, 0, 'back').should.be.true();
-      }
+      let inst = stepper({pwm: pwm, pins: p, style: 'microstep', pps: 600});
+      inst.stepSync('back', steps);
+
+      checkExpected('./micro8back.json', pwm, p, steps);
     });
   });
 
@@ -256,41 +219,17 @@ describe('lib/stepper.js', function () {
     beforeEach(function () {
       pwm.resetAll();
     });
-    let check16MicroStep = function (i, channel) {
-      let p = ports[channel];
-      let step2coils = [
-        [1, 1, 0, 0],
-        [0, 1, 1, 0],
-        [0, 0, 1, 1],
-        [1, 0, 0, 1]
-      ];
 
-      let expectedPWM = [
-        255, 253, 250, 244, 236, 225, 212, 197, 180, 162, 141, 120, 98, 74, 50, 25,
-        0, 25, 50, 74, 98, 120, 141, 162, 180, 197, 212, 225, 236, 244, 250, 253
-      ];
-
-      for (let j = 1; j < i; j++) {
-        var pwmCall = (j - 1) * 2;
-        var pinCall = (j - 1) * 4;
-
-        pwm.setPWM.getCall(pwmCall).args.should.deepEqual([p.W1.PWM, 0, expectedPWM[j % 32] * 16]);
-        pwm.setPWM.getCall(pwmCall + 1).args.should.deepEqual([p.W2.PWM, 0, expectedPWM[(j + 16) % 32] * 16]);
-        pwm.setPin.getCall(pinCall).args.should.deepEqual([p.W1.IN2, step2coils[Math.floor(j / 16) % 4][0]]);
-        pwm.setPin.getCall(pinCall + 1).args.should.deepEqual([p.W2.IN1, step2coils[Math.floor(j / 16) % 4][1]]);
-        pwm.setPin.getCall(pinCall + 2).args.should.deepEqual([p.W1.IN1, step2coils[Math.floor(j / 16) % 4][2]]);
-        pwm.setPin.getCall(pinCall + 3).args.should.deepEqual([p.W2.IN2, step2coils[Math.floor(j / 16) % 4][3]]);
-      }
-      return true;
-    };
+    let channel = 0;
+    var steps = 4 * 16;
+    let p = ports[channel];
 
     it('should do 4 * 16 microsteps', function () {
-      let inst = stepper({pwm: pwm, pins: ports[0], style: 'microstep', microsteps: 16});
-      inst.setSpeed({pps: 6000});
-      for (let j = 1; j < 4; j++) {
-        inst.stepSync('fwd', 16);
-        check16MicroStep(16, 0).should.be.true();
-      }
+      let inst = stepper({pwm: pwm, pins: p, style: 'microstep', microsteps: 16});
+      inst.setSpeed({rpm: 6000});
+      inst.stepSync('fwd', steps);
+
+      checkExpected('./micro16.json', pwm, p, steps);
     });
   });
 
@@ -298,47 +237,25 @@ describe('lib/stepper.js', function () {
     beforeEach(function () {
       pwm.resetAll();
     });
-    let checkInterleavedStep = function (pwm, i, channel, dir) {
-      let p = ports[channel];
-      let step2coils = [
-        [1, 0, 0, 0],
-        [1, 1, 0, 0],
-        [0, 1, 0, 0],
-        [0, 1, 1, 0],
-        [0, 0, 1, 0],
-        [0, 0, 1, 1],
-        [0, 0, 0, 1],
-        [1, 0, 0, 1]
-      ];
 
-      for (let j = 1; j < i; j++) {
-        var pwmCall = (j - 1) * 2;
-        var pinCall = (j - 1) * 4;
-        var k = (dir === 'fwd') ? j : ((-j % 8) + 8);
-        pwm.setPWM.getCall(pwmCall).args.should.deepEqual([p.W1.PWM, 0, 255 * 16]);
-        pwm.setPWM.getCall(pwmCall + 1).args.should.deepEqual([p.W2.PWM, 0, 255 * 16]);
-        pwm.setPin.getCall(pinCall).args.should.deepEqual([p.W1.IN2, step2coils[k % 8][0]]);
-        pwm.setPin.getCall(pinCall + 1).args.should.deepEqual([p.W2.IN1, step2coils[k % 8][1]]);
-        pwm.setPin.getCall(pinCall + 2).args.should.deepEqual([p.W1.IN1, step2coils[k % 8][2]]);
-        pwm.setPin.getCall(pinCall + 3).args.should.deepEqual([p.W2.IN2, step2coils[k % 8][3]]);
-      }
-      return true;
-    };
+    let channel = 0;
+    var steps = 8;
+    let p = ports[channel];
 
-    it('should do 4 * 8 interleaved steps fwd', function () {
-      let inst = stepper({pwm: pwm, pins: ports[0], style: 'interleaved', pps: 600});
-      for (let j = 1; j < 4; j++) {
-        inst.stepSync('fwd', 8);
-        checkInterleavedStep(pwm, 8, 0, 'fwd').should.be.true();
-      }
+    it('should do 8 interleaved steps fwd', function () {
+      let inst = stepper({pwm: pwm, pins: p, style: 'interleaved', pps: 600});
+
+      inst.stepSync('fwd', steps);
+
+      checkExpected('./interleavedfwd.json', pwm, p, steps);
     });
 
     it('should do 4 * 8 interleaved steps back', function () {
-      let inst = stepper({pwm: pwm, pins: ports[0], style: 'interleaved', rpm: 6000});
-      for (let j = 1; j < 4; j++) {
-        inst.stepSync('back', 8);
-        checkInterleavedStep(pwm, 8, 0, 'back').should.be.true();
-      }
+      let inst = stepper({pwm: pwm, pins: p, style: 'interleaved', pps: 600});
+
+      inst.stepSync('back', steps);
+
+      checkExpected('./interleavedback.json', pwm, p, steps);
     });
   });
 });

@@ -7,6 +7,12 @@ describe('motor-hat', function () {
     motorHat.should.be.type('function');
   });
 
+  it('shouldn\'t need options', function () {
+    (function () {
+      motorHat();
+    }).should.not.throw();
+  });
+
   it('should respect max number of steppers', function () {
     (function () {
       motorHat({
@@ -68,25 +74,11 @@ describe('motor-hat', function () {
     }).should.not.throw();
   });
 
-  it('should respect frequency type', function () {
-    (function () {
-      motorHat({
-        frequency: 'string'
-      });
-    }).should.throw();
-  });
-
   it('should respect I2C Address type', function () {
     (function () {
       motorHat({
         address: 'string'
       });
     }).should.throw();
-  });
-
-  it('should have setters and getters for freq and addr', function () {
-    motorHat().setFrequency(10).getFrequency().should.equal(10);
-
-    motorHat().setAddress(0x10).getAddress().should.equal(0x10);
   });
 });

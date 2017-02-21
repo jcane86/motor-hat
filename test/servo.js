@@ -8,7 +8,7 @@ let pwm = {
   setPWMFreq: sinon.spy()
 };
 
-describe('lib/servo.js', function () {
+describe('lib/servolib.js', function () {
   it('should have constructor', function () {
     servo.should.be.type('function');
   });
@@ -59,7 +59,7 @@ describe('lib/servo.js', function () {
     }).should.throw();
   });
 
-  describe('default servo calibration', function () {
+  describe('default servolib calibration', function () {
     let defMinCount = 143.36;
     let defMaxCount = 655.36;
     let defFreq = 50;
@@ -85,7 +85,7 @@ describe('lib/servo.js', function () {
     });
   });
 
-  describe('update servo calibrations', function () {
+  describe('update servolib calibrations', function () {
     let newFreq = 40;
     let minMs = 1;
     let maxMs = 2;
