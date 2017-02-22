@@ -16,6 +16,17 @@ const pwm = {
   },
 };
 
+const seqdoublefwd = './stepsequences/doublefwd.json';
+const seqdoubleback = './stepsequences/doubleback.json';
+const seqsinglefwd = './stepsequences/singlefwd.json';
+const seqsingleback = './stepsequences/singleback.json';
+const seqmicro8fwd = './stepsequences/micro8fwd.json';
+const seqmicro8back = './stepsequences/micro8back.json';
+const seqmicro16fwd = './stepsequences/micro16fwd.json';
+// let seqmicro16back = './stepsequences/micro16back.json';
+const seqinterleavedfwd = './stepsequences/interleavedfwd.json';
+const seqinterleavedback = './stepsequences/interleavedback.json';
+
 const ports = [{
   // channel 0 ports
   W1: {
@@ -157,14 +168,14 @@ describe('lib/stepper.js', () => {
       const inst = stepper({ pwm, pins: p, pps: 600 });
       inst.stepSync('fwd', steps);
 
-      checkExpected('./doublefwd.json', pwm, po, steps);
+      checkExpected(seqdoublefwd, pwm, po, steps);
     });
 
     it('should do 4 double steps back', () => {
       const inst = stepper({ pwm, pins: p, pps: 600 });
       inst.stepSync('back', steps);
 
-      checkExpected('./doubleback.json', pwm, po, steps);
+      checkExpected(seqdoubleback, pwm, po, steps);
     });
   });
 
@@ -181,14 +192,14 @@ describe('lib/stepper.js', () => {
       const inst = stepper({ pwm, pins: p, style: 'single', pps: 600 });
       inst.stepSync('fwd', steps);
 
-      checkExpected('./singlefwd.json', pwm, p, steps);
+      checkExpected(seqsinglefwd, pwm, p, steps);
     });
 
     it('should do 4 single steps back', () => {
       const inst = stepper({ pwm, pins: p, style: 'single', pps: 600 });
       inst.stepSync('back', steps);
 
-      checkExpected('./singleback.json', pwm, p, steps);
+      checkExpected(seqsingleback, pwm, p, steps);
     });
   });
 
@@ -205,14 +216,14 @@ describe('lib/stepper.js', () => {
       const inst = stepper({ pwm, pins: p, style: 'microstep', pps: 600 });
       inst.stepSync('fwd', steps);
 
-      checkExpected('./micro8fwd.json', pwm, p, steps);
+      checkExpected(seqmicro8fwd, pwm, p, steps);
     });
 
     it('should do 4 * 8 microsteps back', () => {
       const inst = stepper({ pwm, pins: p, style: 'microstep', pps: 600 });
       inst.stepSync('back', steps);
 
-      checkExpected('./micro8back.json', pwm, p, steps);
+      checkExpected(seqmicro8back, pwm, p, steps);
     });
   });
 
@@ -230,7 +241,7 @@ describe('lib/stepper.js', () => {
       inst.setSpeed({ rpm: 6000 });
       inst.stepSync('fwd', steps);
 
-      checkExpected('./micro16.json', pwm, p, steps);
+      checkExpected(seqmicro16fwd, pwm, p, steps);
     });
   });
 
@@ -247,14 +258,14 @@ describe('lib/stepper.js', () => {
       const inst = stepper({ pwm, pins: p, style: 'interleaved', pps: 600 });
       inst.stepSync('fwd', steps);
 
-      checkExpected('./interleavedfwd.json', pwm, p, steps);
+      checkExpected(seqinterleavedfwd, pwm, p, steps);
     });
 
     it('should do 4 * 8 interleaved steps back', () => {
       const inst = stepper({ pwm, pins: p, style: 'interleaved', pps: 600 });
       inst.stepSync('back', steps);
 
-      checkExpected('./interleavedback.json', pwm, p, steps);
+      checkExpected(seqinterleavedback, pwm, p, steps);
     });
   });
 });
