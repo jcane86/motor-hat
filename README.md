@@ -1,4 +1,4 @@
-# motor-hat [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url][![semantic-release][semrel-image]][semrel-url][![Commitizen friendly][commitizen-image]][commitizen-url]
+# motor-hat [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url] [![semantic-release][semrel-image]][semrel-url] [![Commitizen friendly][commitizen-image]][commitizen-url]
 > Node Module to control Adafruit's MotorHAT for the Raspberry Pi
 
 ## Installation
