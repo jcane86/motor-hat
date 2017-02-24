@@ -22,8 +22,11 @@ let spec = {
 };
 var motorHat = require('motor-hat')(spec);
 
-// For steppers, set speed in rpm or pps
-motorHat.steppers[0].setSpeed({rpm:10});
+// For steppers, set speed in rpm or pps (pulses per second) or sps (steps per second).
+// To set it in rpm, set you steps/rev first (default 200)
+// If you set it in pps, the speed will not be constant for different styles or number of microsteps.
+motorHat.steppers[0].setSteps(2048);
+motorHat.steppers[0].setSpeed({rpm:20});
 // Supported syles are 'single', 'double', 'interleaved', and 'microstep'
 motorHat.steppers[0].setStyle('double');
 // stepSync and oneStepSync take number of steps/halfsteps/microsteps as input, 

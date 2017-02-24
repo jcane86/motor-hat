@@ -153,6 +153,62 @@ describe('lib/stepper.js', () => {
     }).should.not.throw();
   });
 
+  describe('setSteps()', () => {
+    it('should validate steps', () => {
+      (function () {
+        stepper({ pwm: { setPWMFreq() {} }, pins: ports[0] }).setSteps('test');
+      }).should.throw();
+
+      (function () {
+        stepper({ pwm: { setPWMFreq() {} }, pins: ports[0] }).setSteps(64 * 32);
+      }).should.not.throw();
+    });
+
+    it('should re-set speed if it was configured in rpm', () => {
+      const inst = stepper({ pwm: { setPWMFreq() {} }, pins: ports[0], rpm: 600, steps: 100 });
+
+      const oldfreq = inst.options.pulsefreq;
+      inst.setSteps(300);
+      inst.options.pulsefreq.should.not.equal(oldfreq);
+    });
+  });
+
+  describe('setSpeed()', () => {
+    it('should validate speed', () => {
+      (function () {
+        stepper({ pwm: { setPWMFreq() {} }, pins: ports[0] }).setSpeed('test');
+      }).should.throw();
+
+      (function () {
+        stepper({ pwm: { setPWMFreq() {} }, pins: ports[0] }).setSpeed({ rpm: 200 });
+      }).should.not.throw();
+    });
+
+    it('should re-set speed if it was configured in rpm', () => {
+      const inst = stepper({ pwm: { setPWMFreq() {} }, pins: ports[0], rpm: 600, steps: 100 });
+
+      const oldfreq = inst.options.pulsefreq;
+      inst.setSpeed({ rpm: 200 });
+      inst.options.pulsefreq.should.not.equal(oldfreq);
+    });
+
+    it('should re-set speed if it was configured in pps', () => {
+      const inst = stepper({ pwm: { setPWMFreq() {} }, pins: ports[0], pps: 600, steps: 100 });
+
+      const oldfreq = inst.options.pulsefreq;
+      inst.setSpeed({ pps: 200 });
+      inst.options.pulsefreq.should.not.equal(oldfreq);
+    });
+
+    it('should re-set speed if it was configured in sps', () => {
+      const inst = stepper({ pwm: { setPWMFreq() {} }, pins: ports[0], sps: 600, steps: 100 });
+
+      const oldfreq = inst.options.pulsefreq;
+      inst.setSpeed({ sps: 200 });
+      inst.options.pulsefreq.should.not.equal(oldfreq);
+    });
+  });
+
   describe('double stepping (by default)', () => {
     beforeEach(() => {
       pwm.resetAll();
