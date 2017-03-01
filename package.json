@@ -9,7 +9,8 @@
     "url": "www.github.com/jcane86"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "main": "dist/index.js",
   "keywords": [
