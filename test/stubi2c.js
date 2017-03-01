@@ -1,12 +1,15 @@
-let sinon = require('sinon');
-let bus = {
+'use strict';
+
+const sinon = require('sinon');
+
+const bus = {
   writeByteSync: sinon.stub(),
   sendByteSync: sinon.stub(),
-  readByteSync: sinon.stub().returns(0xBEE)
+  readByteSync: sinon.stub().returns(0xBEE),
 };
-let i2c = {
+const i2c = {
   openSync: sinon.stub().returns(bus),
-  resetAll: function () {
+  resetAll() {
     bus.writeByteSync.reset();
     bus.sendByteSync.reset();
     bus.readByteSync.reset();
@@ -15,7 +18,6 @@ let i2c = {
   get bus() {
     return bus;
   },
-  set bus(x) {},
-  '@noCallThru': true
+  '@noCallThru': true,
 };
 module.exports = i2c;
