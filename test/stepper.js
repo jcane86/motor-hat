@@ -16,7 +16,7 @@ const pwm = {
   },
 };
 
-let ports = [{
+const ports = [{
   // channel 0 ports
   W1: {
     PWM: 8,
@@ -142,8 +142,8 @@ describe('lib/stepper.js', () => {
     }).should.not.throw();
   });
 
-  describe('double stepping (by default)', function () {
-    beforeEach(function () {
+  describe('double stepping (by default)', () => {
+    beforeEach(() => {
       pwm.resetAll();
     });
 
