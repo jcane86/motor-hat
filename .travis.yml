@@ -4,4 +4,17 @@ node_js:
   - v6
   - v5
   - v4
-  - '0.12'
+install:
+  - npm install i2c-bus --ignore-scripts
+  - npm install
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+cache:
+  directories:
+    - node_modules
