@@ -10,9 +10,53 @@ $ npm install --save motor-hat
 ## Usage
 
 ```js
-var motorHat = require('motor-hat');
+// get a motor-hat instance with the following initialized:
+// * a stepper with winding one on 'M1' and winding two on 'M2' ports
+// * a dc motor on port 'M4'
+// * a servo on channel 0
+// * a servo on channel 14
+let spec = {
+    steppers: [['M1', 'M2']],
+    dcs: ['M4'],
+    servos: [0,14]
+};
+var motorHat = require('motor-hat')(spec);
 
-motorHat('Rainbow');
+// For steppers, set speed in rpm or pps
+motorHat.steppers[0].setSpeed({rpm:10});
+// Supported syles are 'single', 'double', 'interleaved', and 'microstep'
+motorHat.steppers[0].setStyle('double');
+// stepSync and oneStepSync take number of steps/halfsteps/microsteps as input, 
+// depending on selected style. To do 8 full steps fwd, 4 back:
+motorHat.steppers[0].stepSync('fwd', 8);
+motorHat.steppers[0].stepSync('back', 4);
+
+// Supported syles are 'single', 'double', 'interleaved', and 'microstep'
+motorHat.steppers[0].setStyle('microstep');
+// Supported number of microsteps are 8 and 16 (8 by default)
+motorHat.steppers[0].setMicrosteps(16);
+// stepSync and oneStepSync take number of steps/halfsteps/microsteps as input, 
+// depending on selected style. To do 16 microsteps fwd:
+motorHat.steppers[0].stepSync('back', 16);
+
+
+// Calibrate the servo output. Pass in PWM frequency, position 0 pulse duration in ms,
+// position 100 pulse duration in ms.
+motorHat.servos[0].calibrate(50, 1, 2);
+// Move to position 0
+motorHat.servos[0].moveTo(0);
+// Move to position 100
+motorHat.servos[0].moveTo(100);
+
+
+// Start dc motor forward (by default at 100% speed)
+motorHat.dcs[0].run('fwd');
+// Set DC motor speed to 50%
+motorHat.dcs[0].setSpeed(50);
+// reverse the dc motor to back direction
+motorHat.dcs[0].run('back');
+// stop the dc motor
+motorHat.dcs[0].stop();
 ```
 ## License
 
