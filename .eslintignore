@@ -1,0 +1,10 @@
+*
+!*.json
+!*.js
+!test
+!test/*.json
+!test/*.js
+!lib
+!lib/*.json
+!lib/*.js
+

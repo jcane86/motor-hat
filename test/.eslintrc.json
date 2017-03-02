@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "func-names": "off"
+  },
+  "env": {
+    "mocha": true
+  }
+}
