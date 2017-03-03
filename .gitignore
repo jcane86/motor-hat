@@ -3,3 +3,5 @@ coverage
 dist
 .idea
 .editorconfig
+.nyc_output
+npm-debug.log

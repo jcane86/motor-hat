@@ -1,17 +1,19 @@
-let proxyquire = require('proxyquire');
-var i2c = 0;
-let obj = {
+'use strict';
+
+const proxyquire = require('proxyquire');
+
+let i2c = 0;
+const obj = {
   'raspi-ver': {
     get i2c() {
       return i2c;
     },
-    set i2c(x) {},
-    '@noCallThru': true
+    '@noCallThru': true,
   },
-  '@noCallThru': true
+  '@noCallThru': true,
 };
-let pwm = proxyquire('../dist/pwm.js', obj);
-pwm.seti2c = function (val) {
+const pwm = proxyquire('../lib/pwm.js', obj);
+pwm.seti2c = function seti2c(val) {
   i2c = val;
 };
 module.exports = pwm;

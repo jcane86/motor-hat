@@ -1,6 +1,6 @@
 {
   "name": "motor-hat",
-  "version": "1.0.0",
+  "version": "1.0.0-semanticrelease",
   "description": "Node Module to control Adafruits MotorHAT for the RaspberryPi",
   "homepage": "http://www.github.com/jcane86/motor-hat",
   "author": {
@@ -9,7 +9,8 @@
     "url": "www.github.com/jcane86"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "main": "dist/index.js",
   "keywords": [
@@ -24,42 +25,41 @@
     "hat"
   ],
   "devDependencies": {
-    "babel-core": "^6.22.1",
-    "babel-eslint": "^7.1.1",
+    "babel-cli": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
+    "coveralls": "^2.11.16",
+    "cz-conventional-changelog": "^2.0.0",
     "del": "^2.2.2",
-    "eslint": "^3.15.0",
-    "eslint-config-xo-space": "^0.15.0",
+    "eslint": "^3.16.1",
+    "eslint-config-airbnb-base": "^11.1.0",
     "eslint-plugin-babel": "^4.0.1",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-coveralls": "^0.1.4",
-    "gulp-eslint": "^3.0.1",
-    "gulp-exclude-gitignore": "^1.1.1",
-    "gulp-istanbul": "^1.1.1",
-    "gulp-line-ending-corrector": "^1.0.1",
-    "gulp-mocha": "^3.0.1",
-    "gulp-nsp": "^2.4.2",
-    "gulp-plumber": "^1.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "husky": "^0.13.1",
     "isparta": "^4.0.0",
+    "mocha": "^3.2.0",
+    "nyc": "^10.1.2",
     "proxyquire": "^1.7.11",
+    "rimraf": "^2.6.1",
+    "semantic-release": "^6.3.2",
     "should": "^11.2.0",
     "should-sinon": "0.0.5",
     "sinon": "^1.17.7"
   },
-  "eslintConfig": {
-    "extends": "xo-space",
-    "env": {
-      "mocha": true
-    }
-  },
   "repository": "jcane86/motor-hat",
   "scripts": {
-    "prepublish": "node --harmony `which gulp` prepublish",
-    "test": "gulp",
-    "0.12": "node --harmony `which gulp`",
-    "watch": "gulp watch"
+    "precommit": "npm run check-coverage",
+    "commit": "git-cz",
+    "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "report-coverage": "nyc report --reporter=text-lcov | coveralls",
+    "watch:test": "npm t -- -w",
+    "test": "nyc mocha test/ --compilers js:babel-register",
+    "posttest": "npm run lint",
+    "lint": "eslint .",
+    "prebuild": "rimraf dist",
+    "build": "babel --copy-files --out-dir dist --ignore test/ lib",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "license": "MIT",
   "dependencies": {
@@ -68,5 +68,16 @@
     "parambulator": "^1.5.2",
     "raspi-ver": "^1.0.2",
     "sleep": "^5.1.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-2"
+    ]
   }
 }
