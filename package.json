@@ -54,7 +54,7 @@
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
     "watch:test": "npm t -- -w",
-    "test": "nyc mocha test/ --compilers js:babel-register",
+    "test": "nyc -r=lcov mocha test/ --compilers js:babel-register",
     "posttest": "npm run lint",
     "lint": "eslint .",
     "prebuild": "rimraf dist",
