@@ -11,7 +11,7 @@ const i2c = require('./stubi2c.js');
 describe('lib/pwm.js', () => {
   describe('exports', () => {
     afterEach(() => {
-      i2c.openSync.reset();
+      i2c.openSync.resetHistory();
     });
 
     it('should have constructor', () => {

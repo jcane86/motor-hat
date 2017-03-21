@@ -10,10 +10,10 @@ const bus = {
 const i2c = {
   openSync: sinon.stub().returns(bus),
   resetAll() {
-    bus.writeByteSync.reset();
-    bus.sendByteSync.reset();
-    bus.readByteSync.reset();
-    i2c.openSync.reset();
+    bus.writeByteSync.resetHistory();
+    bus.sendByteSync.resetHistory();
+    bus.readByteSync.resetHistory();
+    i2c.openSync.resetHistory();
   },
   get bus() {
     return bus;
