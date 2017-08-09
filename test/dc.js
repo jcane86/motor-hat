@@ -67,28 +67,28 @@ describe('lib/dclib.js', () => {
   });
 
   it('should respect default frequency', () => {
-    const stub = sinon.stub(pwm, 'setPWMFreq', () => {});
+    const stub = sinon.stub(pwm, 'setPWMFreq').callsFake(() => {});
     dc({ pwm, pins: ports.M1 });
     stub.should.be.calledWith(1600);
     stub.restore();
   });
 
   it('should respect default speed', () => {
-    const stub = sinon.stub(pwm, 'setPWM', () => {});
+    const stub = sinon.stub(pwm, 'setPWM').callsFake(() => {});
     dc({ pwm, pins: ports.M1 });
     stub.should.be.calledWith(8, 0, 4080);
     stub.restore();
   });
 
   it('should change speed', () => {
-    const stub = sinon.stub(pwm, 'setPWM', () => {});
+    const stub = sinon.stub(pwm, 'setPWM').callsFake(() => {});
     dc({ pwm, pins: ports.M1 }).setSpeed(50);
     stub.should.be.calledWith(8, 0, 2040);
     stub.restore();
   });
 
   it('should run forwards', () => {
-    const stub = sinon.stub(pwm, 'setPin', () => {});
+    const stub = sinon.stub(pwm, 'setPin').callsFake(() => {});
     dc({ pwm, pins: ports.M1 }).run('fwd');
     stub.should.be.calledWith(10, 1);
     stub.should.be.calledWith(9, 0);
@@ -96,7 +96,7 @@ describe('lib/dclib.js', () => {
   });
 
   it('should run back', () => {
-    const stub = sinon.stub(pwm, 'setPin', () => {});
+    const stub = sinon.stub(pwm, 'setPin').callsFake(() => {});
     dc({ pwm, pins: ports.M1 }).run('back');
     stub.should.be.calledWith(10, 0);
     stub.should.be.calledWith(9, 1);
@@ -104,7 +104,7 @@ describe('lib/dclib.js', () => {
   });
 
   it('should stop', () => {
-    const stub = sinon.stub(pwm, 'setPin', () => {});
+    const stub = sinon.stub(pwm, 'setPin').callsFake(() => {});
     dc({ pwm, pins: ports.M1 }).stop();
     stub.should.be.calledWith(10, 0);
     stub.should.be.calledWith(9, 0);
