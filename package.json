@@ -44,7 +44,7 @@
     "rimraf": "^2.6.1",
     "semantic-release": "^7.0.1",
     "should": "^11.2.0",
-    "should-sinon": "0.0.5",
+    "should-sinon": "0.0.6",
     "sinon": "^3.0.0"
   },
   "repository": "jcane86/motor-hat",
