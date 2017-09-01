@@ -18,7 +18,7 @@ $ npm install --save motor-hat
 // * a servo on channel 0
 // * a servo on channel 14
 let spec = {
-    steppers: [['M1', 'M2']],
+    steppers: [{ W1: 'M1', W2: 'M2' }],
     dcs: ['M4'],
     servos: [0,14]
 };
