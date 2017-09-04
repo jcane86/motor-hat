@@ -6,13 +6,19 @@ const sinon = require('sinon');
 const stepper = require('../lib/stepper.js');
 
 const pwm = {
-  setPWM: sinon.spy(),
-  setPWMFreq: sinon.spy(),
-  setPin: sinon.spy(),
+  setPWMSync: sinon.spy(),
+  setPWMFreqSync: sinon.spy(),
+  setPinSync: sinon.spy(),
+  setPWM: sinon.stub().yieldsAsync(null),
+  setPWMFreq: sinon.stub().yieldsAsync(null),
+  setPin: sinon.stub().yieldsAsync(null),
   resetAll() {
     pwm.setPWM.reset();
     pwm.setPWMFreq.reset();
     pwm.setPin.reset();
+    pwm.setPWMSync.reset();
+    pwm.setPWMFreqSync.reset();
+    pwm.setPinSync.reset();
   },
 };
 
@@ -65,27 +71,27 @@ const checkExpected = function (json, pwmInst, p, steps) {
   let pincall = 0;
   for (count = 0; count < steps; count += 1) {
     if (expected[step].PWMA !== expected[step - 1].PWMA) {
-      pwmInst.setPWM.getCall(pwmcall).args.should.deepEqual([p.W1.PWM, 0, expected[step].PWMA]);
+      pwmInst.setPWMSync.getCall(pwmcall).args.should.deepEqual([p.W1.PWM, 0, expected[step].PWMA]);
       pwmcall += 1;
     }
     if (expected[step].PWMB !== expected[step - 1].PWMB) {
-      pwmInst.setPWM.getCall(pwmcall).args.should.deepEqual([p.W2.PWM, 0, expected[step].PWMB]);
+      pwmInst.setPWMSync.getCall(pwmcall).args.should.deepEqual([p.W2.PWM, 0, expected[step].PWMB]);
       pwmcall += 1;
     }
     if (expected[step].AIN2 !== expected[step - 1].AIN2) {
-      pwmInst.setPin.getCall(pincall).args.should.deepEqual([p.W1.IN2, expected[step].AIN2]);
+      pwmInst.setPinSync.getCall(pincall).args.should.deepEqual([p.W1.IN2, expected[step].AIN2]);
       pincall += 1;
     }
     if (expected[step].BIN1 !== expected[step - 1].BIN1) {
-      pwmInst.setPin.getCall(pincall).args.should.deepEqual([p.W2.IN1, expected[step].BIN1]);
+      pwmInst.setPinSync.getCall(pincall).args.should.deepEqual([p.W2.IN1, expected[step].BIN1]);
       pincall += 1;
     }
     if (expected[step].AIN1 !== expected[step - 1].AIN1) {
-      pwmInst.setPin.getCall(pincall).args.should.deepEqual([p.W1.IN1, expected[step].AIN1]);
+      pwmInst.setPinSync.getCall(pincall).args.should.deepEqual([p.W1.IN1, expected[step].AIN1]);
       pincall += 1;
     }
     if (expected[step].BIN2 !== expected[step - 1].BIN2) {
-      pwmInst.setPin.getCall(pincall).args.should.deepEqual([p.W2.IN2, expected[step].BIN2]);
+      pwmInst.setPinSync.getCall(pincall).args.should.deepEqual([p.W2.IN2, expected[step].BIN2]);
       pincall += 1;
     }
     step += 1;

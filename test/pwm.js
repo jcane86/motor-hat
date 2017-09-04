@@ -1,6 +1,6 @@
 'use strict';
 
-require('should');
+const should = require('should');
 require('should-sinon');
 const pwm = require('./stubpwm.js');
 const i2c = require('./stubi2c.js');
@@ -10,10 +10,6 @@ const i2c = require('./stubi2c.js');
 
 describe('lib/pwm.js', () => {
   describe('exports', () => {
-    afterEach(() => {
-      i2c.openSync.resetHistory();
-    });
-
     it('should have constructor', () => {
       pwm.should.be.type('function');
     });
@@ -80,14 +76,25 @@ describe('lib/pwm.js', () => {
   });
 
   describe('softwareReset()', () => {
+    it('should send a software reset (SWRST) command to all servolib drivers on the bus', (done) => {
+      pwm({ i2c }).softwareReset((err) => {
+        should.equal(err, null);
+        i2c.bus.sendByte.should.be.calledOnce();
+        i2c.bus.sendByte.should.be.calledWith(0x00, 0x06);
+        done();
+      });
+    });
+  });
+
+  describe('softwareResetSync()', () => {
     it('should send a software reset (SWRST) command to all servolib drivers on the bus', () => {
-      pwm({ i2c }).softwareReset();
+      pwm({ i2c }).softwareResetSync();
       i2c.bus.sendByteSync.should.be.calledOnce();
       i2c.bus.sendByteSync.should.be.calledWith(0x00, 0x06);
     });
   });
 
-  describe('setPWMFreq()', () => {
+  describe('setPWMFreqSync()', () => {
     const addr = 0x40;
     const freq = 100;
     const prescale = Math.ceil((25000000 / 4096 / freq) - 1);
@@ -96,7 +103,7 @@ describe('lib/pwm.js', () => {
     i2c.resetAll();
     let i = 0;
     it('should set sleep mode', () => {
-      instance.setPWMFreq(freq);
+      instance.setPWMFreqSync(freq);
       i2c.bus.writeByteSync.getCall(i++).should.be.calledWith(addr, 0x00, (0xBEE & 0x7F) | 0x10);
     });
 
@@ -113,14 +120,60 @@ describe('lib/pwm.js', () => {
     });
   });
 
+  describe('setPWMFreq()', () => {
+    const addr = 0x40;
+    const freq = 100;
+    const prescale = Math.ceil((25000000 / 4096 / freq) - 1);
+
+    const instance = pwm({ i2c, address: addr });
+    i2c.resetAll();
+    let i = 0;
+    it('should set sleep mode', (done) => {
+      instance.setPWMFreq(freq, (err) => {
+        should.equal(err, null);
+
+        i2c.bus.writeByte.getCall(i++).should.be.calledWith(addr, 0x00, (0xBEE & 0x7F) | 0x10);
+
+        it('should write new prescale val', () => {
+          i2c.bus.writeByte.getCall(i++).should.be.calledWith(addr, 0xFE, prescale);
+        });
+
+        it('should set reset the chip', () => {
+          i2c.bus.writeByte.getCall(i++).should.be.calledWith(addr, 0x00, 0xBEE);
+        });
+
+        it('should set clear reset flag', () => {
+          i2c.bus.writeByte.getCall(i++).should.be.calledWith(addr, 0x00, 0xBEE | 0x80);
+        });
+
+        done();
+      });
+    });
+  });
+
   describe('getPWMFreq()', () => {
     const addr = 0x40;
 
     const instance = pwm({ i2c, address: addr });
     i2c.resetAll();
 
+    it('should read prescale val', (done) => {
+      instance.getPWMFreq((err) => {
+        should.equal(err, null);
+        i2c.bus.readByte.should.be.calledWith(addr, 0xFE);
+        done();
+      });
+    });
+  });
+
+  describe('getPWMFreqSync()', () => {
+    const addr = 0x40;
+
+    const instance = pwm({ i2c, address: addr });
+    i2c.resetAll();
+
     it('should read prescale val', () => {
-      instance.getPWMFreq();
+      instance.getPWMFreqSync();
       i2c.bus.readByteSync.should.be.calledWith(addr, 0xFE);
     });
   });
@@ -142,9 +195,39 @@ describe('lib/pwm.js', () => {
       }).should.throw();
     });
 
+    it('should set all 4 registers for the channel', (done) => {
+      i2c.resetAll();
+      instance.setPWM(channel, on, off, (err) => {
+        should.equal(err, null);
+        i2c.bus.writeByte.getCall(0).should.be.calledWith(addr, 0x06 + (4 * channel), on & 0xFF);
+        i2c.bus.writeByte.getCall(1).should.be.calledWith(addr, 0x07 + (4 * channel), on >> 8);
+        i2c.bus.writeByte.getCall(2).should.be.calledWith(addr, 0x08 + (4 * channel), off & 0xFF);
+        i2c.bus.writeByte.getCall(3).should.be.calledWith(addr, 0x09 + (4 * channel), off >> 8);
+        done();
+      });
+    });
+  });
+
+  describe('setPWMSync()', () => {
+    const addr = 0x40;
+    const channel = 5;
+    const on = 0x10;
+    const off = 0xFE;
+
+    const instance = pwm({ i2c, address: addr });
+
+    it('should fail on channels different to 0 to 15', () => {
+      (function () {
+        instance.setPWMSync(16, on, off);
+      }).should.throw();
+      (function () {
+        instance.setPin(-1, on, off);
+      }).should.throw();
+    });
+
     it('should set all 4 registers for the channel', () => {
       i2c.resetAll();
-      instance.setPWM(channel, on, off);
+      instance.setPWMSync(channel, on, off);
       i2c.bus.writeByteSync.getCall(0).should.be.calledWith(addr, 0x06 + (4 * channel), on & 0xFF);
       i2c.bus.writeByteSync.getCall(1).should.be.calledWith(addr, 0x07 + (4 * channel), on >> 8);
       i2c.bus.writeByteSync.getCall(2).should.be.calledWith(addr, 0x08 + (4 * channel), off & 0xFF);
@@ -159,9 +242,29 @@ describe('lib/pwm.js', () => {
 
     const instance = pwm({ i2c, address: addr });
 
+    it('should set all 4 registers for the channel', (done) => {
+      i2c.resetAll();
+      instance.setAllPWM(on, off, (err) => {
+        should.equal(err, null);
+        i2c.bus.writeByte.getCall(0).should.be.calledWith(addr, 0xFA, on & 0xFF);
+        i2c.bus.writeByte.getCall(1).should.be.calledWith(addr, 0xFB, on >> 8);
+        i2c.bus.writeByte.getCall(2).should.be.calledWith(addr, 0xFC, off & 0xFF);
+        i2c.bus.writeByte.getCall(3).should.be.calledWith(addr, 0xFD, off >> 8);
+        done();
+      });
+    });
+  });
+
+  describe('setAllPWMSync()', () => {
+    const addr = 0x40;
+    const on = 0x10;
+    const off = 0xFE;
+
+    const instance = pwm({ i2c, address: addr });
+
     it('should set all 4 registers for the channel', () => {
       i2c.resetAll();
-      instance.setAllPWM(on, off);
+      instance.setAllPWMSync(on, off);
       i2c.bus.writeByteSync.getCall(0).should.be.calledWith(addr, 0xFA, on & 0xFF);
       i2c.bus.writeByteSync.getCall(1).should.be.calledWith(addr, 0xFB, on >> 8);
       i2c.bus.writeByteSync.getCall(2).should.be.calledWith(addr, 0xFC, off & 0xFF);
@@ -178,26 +281,79 @@ describe('lib/pwm.js', () => {
 
     it('should fail on values different to 1 or 0', () => {
       (function () {
-        instance.setPin(channel, 2);
+        instance.setPin(channel, 2, () => {});
       }).should.throw();
 
       (function () {
-        instance.setPin(channel, -1);
+        instance.setPin(channel, -1, () => {});
       }).should.throw();
     });
 
     it('should fail on channels different to 0 to 15', () => {
       (function () {
-        instance.setPin(16, 0);
+        instance.setPin(16, 0, () => {});
       }).should.throw();
 
       (function () {
-        instance.setPin(-1, 1);
+        instance.setPin(-1, 1, () => {});
+      }).should.throw();
+    });
+
+    it('should set all 4 registers for the channel to OFF', (done) => {
+      const offset = 4 * channel;
+      instance.setPin(channel, 0, (err) => {
+        should.equal(err, null);
+        i2c.bus.writeByte.getCall(0).should.be.calledWith(addr, 0x06 + offset, 0);
+        i2c.bus.writeByte.getCall(1).should.be.calledWith(addr, 0x07 + offset, 0);
+        i2c.bus.writeByte.getCall(2).should.be.calledWith(addr, 0x08 + offset, 4096 & 0xFF);
+        i2c.bus.writeByte.getCall(3).should.be.calledWith(addr, 0x09 + offset, 4096 >> 8);
+        i2c.resetAll();
+        done();
+      });
+    });
+
+    it('should set all 4 registers for the channel to ON', (done) => {
+      const offset = 4 * channel;
+      instance.setPin(channel, 1, (err) => {
+        should.equal(err, null);
+        i2c.bus.writeByte.getCall(0).should.be.calledWith(addr, 0x06 + offset, 4096 & 0xFF);
+        i2c.bus.writeByte.getCall(1).should.be.calledWith(addr, 0x07 + offset, 4096 >> 8);
+        i2c.bus.writeByte.getCall(2).should.be.calledWith(addr, 0x08 + offset, 0);
+        i2c.bus.writeByte.getCall(3).should.be.calledWith(addr, 0x09 + offset, 0);
+        done();
+      });
+    });
+  });
+
+  describe('setPinSync()', () => {
+    const addr = 0x40;
+    const channel = 5;
+
+    const instance = pwm({ i2c, address: addr });
+    i2c.resetAll();
+
+    it('should fail on values different to 1 or 0', () => {
+      (function () {
+        instance.setPinSync(channel, 2);
+      }).should.throw();
+
+      (function () {
+        instance.setPinSync(channel, -1);
+      }).should.throw();
+    });
+
+    it('should fail on channels different to 0 to 15', () => {
+      (function () {
+        instance.setPinSync(16, 0);
+      }).should.throw();
+
+      (function () {
+        instance.setPinSync(-1, 1);
       }).should.throw();
     });
 
     it('should set all 4 registers for the channel to OFF', () => {
-      instance.setPin(channel, 0);
+      instance.setPinSync(channel, 0);
       const offset = 4 * channel;
       i2c.bus.writeByteSync.getCall(0).should.be.calledWith(addr, 0x06 + offset, 0);
       i2c.bus.writeByteSync.getCall(1).should.be.calledWith(addr, 0x07 + offset, 0);
@@ -207,7 +363,7 @@ describe('lib/pwm.js', () => {
     });
 
     it('should set all 4 registers for the channel to ON', () => {
-      instance.setPin(channel, 1);
+      instance.setPinSync(channel, 1);
       const offset = 4 * channel;
       i2c.bus.writeByteSync.getCall(0).should.be.calledWith(addr, 0x06 + offset, 4096 & 0xFF);
       i2c.bus.writeByteSync.getCall(1).should.be.calledWith(addr, 0x07 + offset, 4096 >> 8);
