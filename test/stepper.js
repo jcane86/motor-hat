@@ -57,7 +57,9 @@ const checkExpected = function (json, pwmInst, p, steps) {
   // eslint-disable-next-line global-require, import/no-dynamic-require
   const expected = require(json);
   let count;
-  expected[-1] = { PWMA: -1, PWMB: -1, AIN1: -1, AIN2: -1, BIN1: -1, BIN2: -1 };
+  expected[-1] = {
+    PWMA: -1, PWMB: -1, AIN1: -1, AIN2: -1, BIN1: -1, BIN2: -1,
+  };
   let step = 0;
   let pwmcall = 0;
   let pincall = 0;
@@ -165,7 +167,9 @@ describe('lib/stepper.js', () => {
     });
 
     it('should re-set speed if it was configured in rpm', () => {
-      const inst = stepper({ pwm: { setPWMFreq() {} }, pins: ports[0], rpm: 600, steps: 100 });
+      const inst = stepper({
+        pwm: { setPWMFreq() {} }, pins: ports[0], rpm: 600, steps: 100,
+      });
 
       const oldfreq = inst.options.pulsefreq;
       inst.setSteps(300);
@@ -185,7 +189,9 @@ describe('lib/stepper.js', () => {
     });
 
     it('should re-set speed if it was configured in rpm', () => {
-      const inst = stepper({ pwm: { setPWMFreq() {} }, pins: ports[0], rpm: 600, steps: 100 });
+      const inst = stepper({
+        pwm: { setPWMFreq() {} }, pins: ports[0], rpm: 600, steps: 100,
+      });
 
       const oldfreq = inst.options.pulsefreq;
       inst.setSpeed({ rpm: 200 });
@@ -193,7 +199,9 @@ describe('lib/stepper.js', () => {
     });
 
     it('should re-set speed if it was configured in pps', () => {
-      const inst = stepper({ pwm: { setPWMFreq() {} }, pins: ports[0], pps: 600, steps: 100 });
+      const inst = stepper({
+        pwm: { setPWMFreq() {} }, pins: ports[0], pps: 600, steps: 100,
+      });
 
       const oldfreq = inst.options.pulsefreq;
       inst.setSpeed({ pps: 200 });
@@ -201,7 +209,9 @@ describe('lib/stepper.js', () => {
     });
 
     it('should re-set speed if it was configured in sps', () => {
-      const inst = stepper({ pwm: { setPWMFreq() {} }, pins: ports[0], sps: 600, steps: 100 });
+      const inst = stepper({
+        pwm: { setPWMFreq() {} }, pins: ports[0], sps: 600, steps: 100,
+      });
 
       const oldfreq = inst.options.pulsefreq;
       inst.setSpeed({ sps: 200 });
@@ -245,14 +255,18 @@ describe('lib/stepper.js', () => {
     const p = ports[channel];
 
     it('should do 4 single steps fwd', () => {
-      const inst = stepper({ pwm, pins: p, style: 'single', pps: 600 });
+      const inst = stepper({
+        pwm, pins: p, style: 'single', pps: 600,
+      });
       inst.stepSync('fwd', steps);
 
       checkExpected(seqsinglefwd, pwm, p, steps);
     });
 
     it('should do 4 single steps back', () => {
-      const inst = stepper({ pwm, pins: p, style: 'single', pps: 600 });
+      const inst = stepper({
+        pwm, pins: p, style: 'single', pps: 600,
+      });
       inst.stepSync('back', steps);
 
       checkExpected(seqsingleback, pwm, p, steps);
@@ -269,14 +283,18 @@ describe('lib/stepper.js', () => {
     const p = ports[channel];
 
     it('should do 4 * 8 microsteps fwd', () => {
-      const inst = stepper({ pwm, pins: p, style: 'microstep', pps: 600 });
+      const inst = stepper({
+        pwm, pins: p, style: 'microstep', pps: 600,
+      });
       inst.stepSync('fwd', steps);
 
       checkExpected(seqmicro8fwd, pwm, p, steps);
     });
 
     it('should do 4 * 8 microsteps back', () => {
-      const inst = stepper({ pwm, pins: p, style: 'microstep', pps: 600 });
+      const inst = stepper({
+        pwm, pins: p, style: 'microstep', pps: 600,
+      });
       inst.stepSync('back', steps);
 
       checkExpected(seqmicro8back, pwm, p, steps);
@@ -293,7 +311,9 @@ describe('lib/stepper.js', () => {
     const p = ports[channel];
 
     it('should do 4 * 16 microsteps', () => {
-      const inst = stepper({ pwm, pins: p, style: 'microstep', microsteps: 16 });
+      const inst = stepper({
+        pwm, pins: p, style: 'microstep', microsteps: 16,
+      });
       inst.setSpeed({ rpm: 6000 });
       inst.stepSync('fwd', steps);
 
@@ -311,14 +331,18 @@ describe('lib/stepper.js', () => {
     const p = ports[channel];
 
     it('should do 8 interleaved steps fwd', () => {
-      const inst = stepper({ pwm, pins: p, style: 'interleaved', pps: 600 });
+      const inst = stepper({
+        pwm, pins: p, style: 'interleaved', pps: 600,
+      });
       inst.stepSync('fwd', steps);
 
       checkExpected(seqinterleavedfwd, pwm, p, steps);
     });
 
     it('should do 4 * 8 interleaved steps back', () => {
-      const inst = stepper({ pwm, pins: p, style: 'interleaved', pps: 600 });
+      const inst = stepper({
+        pwm, pins: p, style: 'interleaved', pps: 600,
+      });
       inst.stepSync('back', steps);
 
       checkExpected(seqinterleavedback, pwm, p, steps);
