@@ -111,35 +111,35 @@ describe('lib/stepper.js', () => {
 
   it('should require W1 and W2 pins to initialize', () => {
     (function () {
-      stepper({ pwm: {} });
+      stepper({ pwm: pwm });
     }).should.throw();
 
     (function () {
-      stepper({ pwm: {}, pins: { W1: [0, 1, 2] } });
+      stepper({ pwm: pwm, pins: { W1: [0, 1, 2] } });
     }).should.throw();
 
     (function () {
-      stepper({ pwm: {}, pins: { W2: [0, 1, 2] } });
+      stepper({ pwm: pwm, pins: { W2: [0, 1, 2] } });
     }).should.throw();
   });
 
   it('should require exactly 6 pins', () => {
     (function () {
-      stepper({ pwm: {}, pins: { W1: [0, 1, 2], W2: [3, 4, 5, 6] } });
+      stepper({ pwm: pwm, pins: { W1: [0, 1, 2], W2: [3, 4, 5, 6] } });
     }).should.throw();
 
     (function () {
-      stepper({ pwm: {}, pins: { W1: [0, 1], W2: [2, 3, 4] } });
+      stepper({ pwm: pwm, pins: { W1: [0, 1], W2: [2, 3, 4] } });
     }).should.throw();
   });
 
   it('should require pins in [0 to 15]', () => {
     (function () {
-      stepper({ pwm: {}, pins: { W1: [16, 1, 2], W2: [3, 4, 5] } });
+      stepper({ pwm: pwm, pins: { W1: [16, 1, 2], W2: [3, 4, 5] } });
     }).should.throw();
 
     (function () {
-      stepper({ pwm: {}, pins: { W1: [-1, 3, 4], W2: [5, 6, 7] } });
+      stepper({ pwm: pwm, pins: { W1: [-1, 3, 4], W2: [5, 6, 7] } });
     }).should.throw();
   });
 
@@ -151,30 +151,30 @@ describe('lib/stepper.js', () => {
 
   it('should fail without speed', () => {
     (function () {
-      stepper({ pwm: { setPWMFreq() {} }, pins: ports[0] }).stepSync('fwd', 4);
+      stepper({ pwm: pwm, pins: ports[0] }).stepSync('fwd', 4);
     }).should.throw();
   });
 
   it('should initialize', () => {
     (function () {
-      stepper({ pwm: { setPWMFreq() {} }, pins: ports[0] });
+      stepper({ pwm: pwm, pins: ports[0] });
     }).should.not.throw();
   });
 
   describe('setSteps()', () => {
     it('should validate steps', () => {
       (function () {
-        stepper({ pwm: { setPWMFreq() {} }, pins: ports[0] }).setSteps('test');
+        stepper({ pwm: pwm, pins: ports[0] }).setSteps('test');
       }).should.throw();
 
       (function () {
-        stepper({ pwm: { setPWMFreq() {} }, pins: ports[0] }).setSteps(64 * 32);
+        stepper({ pwm: pwm, pins: ports[0] }).setSteps(64 * 32);
       }).should.not.throw();
     });
 
     it('should re-set speed if it was configured in rpm', () => {
       const inst = stepper({
-        pwm: { setPWMFreq() {} }, pins: ports[0], rpm: 600, steps: 100,
+        pwm: pwm, pins: ports[0], rpm: 600, steps: 100,
       });
 
       const oldfreq = inst.options.pulsefreq;
@@ -186,17 +186,17 @@ describe('lib/stepper.js', () => {
   describe('setSpeed()', () => {
     it('should validate speed', () => {
       (function () {
-        stepper({ pwm: { setPWMFreq() {} }, pins: ports[0] }).setSpeed('test');
+        stepper({ pwm: pwm, pins: ports[0] }).setSpeed('test');
       }).should.throw();
 
       (function () {
-        stepper({ pwm: { setPWMFreq() {} }, pins: ports[0] }).setSpeed({ rpm: 200 });
+        stepper({ pwm: pwm, pins: ports[0] }).setSpeed({ rpm: 200 });
       }).should.not.throw();
     });
 
     it('should re-set speed if it was configured in rpm', () => {
       const inst = stepper({
-        pwm: { setPWMFreq() {} }, pins: ports[0], rpm: 600, steps: 100,
+        pwm: pwm, pins: ports[0], rpm: 600, steps: 100,
       });
 
       const oldfreq = inst.options.pulsefreq;
@@ -206,7 +206,7 @@ describe('lib/stepper.js', () => {
 
     it('should re-set speed if it was configured in pps', () => {
       const inst = stepper({
-        pwm: { setPWMFreq() {} }, pins: ports[0], pps: 600, steps: 100,
+        pwm: pwm, pins: ports[0], pps: 600, steps: 100,
       });
 
       const oldfreq = inst.options.pulsefreq;
@@ -216,7 +216,7 @@ describe('lib/stepper.js', () => {
 
     it('should re-set speed if it was configured in sps', () => {
       const inst = stepper({
-        pwm: { setPWMFreq() {} }, pins: ports[0], sps: 600, steps: 100,
+        pwm: pwm, pins: ports[0], sps: 600, steps: 100,
       });
 
       const oldfreq = inst.options.pulsefreq;
