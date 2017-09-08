@@ -129,8 +129,8 @@ describe('lib/dclib.js', () => {
     const stub = sinon.stub(pwm, 'setPWM').yieldsAsync(null);
     dc({ pwm, pins: ports.M1 }).init((err, res) => {
       should.equal(err, null);
-      res.setSpeed(50, (err) => {
-        should.equal(err, null);
+      res.setSpeed(50, (error) => {
+        should.equal(error, null);
         stub.should.be.calledWith(8, 0, 2040);
         stub.restore();
         done();
@@ -150,8 +150,8 @@ describe('lib/dclib.js', () => {
     const stub = sinon.stub(pwm, 'setPin').yieldsAsync(null);
     dc({ pwm, pins: ports.M1 }).init((err, res) => {
       should.equal(err, null);
-      res.run('fwd', (err) => {
-        should.equal(err, null);
+      res.run('fwd', (error) => {
+        should.equal(error, null);
         stub.should.be.calledWith(10, 1);
         stub.should.be.calledWith(9, 0);
         stub.restore();
@@ -172,8 +172,8 @@ describe('lib/dclib.js', () => {
     const stub = sinon.stub(pwm, 'setPin').yieldsAsync(null);
     dc({ pwm, pins: ports.M1 }).init((err, res) => {
       should.equal(err, null);
-      res.run('back', (err) => {
-        should.equal(err, null);
+      res.run('back', (error) => {
+        should.equal(error, null);
         stub.should.be.calledWith(10, 0);
         stub.should.be.calledWith(9, 1);
         stub.restore();
@@ -194,8 +194,8 @@ describe('lib/dclib.js', () => {
     const stub = sinon.stub(pwm, 'setPin').yieldsAsync(null);
     dc({ pwm, pins: ports.M1 }).init((err, res) => {
       should.equal(err, null);
-      res.stop((err) => {
-        should.equal(err, null);
+      res.stop((error) => {
+        should.equal(error, null);
         stub.should.be.calledWith(10, 0);
         stub.should.be.calledWith(9, 0);
         stub.restore();
