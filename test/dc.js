@@ -5,7 +5,7 @@ const should = require('should');
 require('should-sinon');
 const dc = require('../lib/dc.js');
 const i2c = require('./stubi2c.js');
-const pwm = require('./stubpwm.js')({ i2c });
+const pwm = require('./stubpwm.js')({ i2c }).init();
 
 const ports = {
   M1: {
