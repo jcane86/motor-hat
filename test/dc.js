@@ -84,6 +84,24 @@ describe('lib/dclib.js', () => {
     }).should.not.throw();
   });
 
+  it('should require callbacks for asynch methods', () => {
+    (function () {
+      dc({ pwm, pins: ports.M1 }).init().run('fwd');
+    }).should.throw();
+
+    (function () {
+      dc({ pwm, pins: ports.M1 }).init().stop();
+    }).should.throw();
+
+    (function () {
+      dc({ pwm, pins: ports.M1 }).init().setSpeed(50);
+    }).should.throw();
+
+    (function () {
+      dc({ pwm, pins: ports.M1 }).init().setFrequency(1600);
+    }).should.throw();
+  });
+
   it('should respect default frequency on synch init', () => {
     const stub = sinon.stub(pwm, 'setPWMFreqSync').callsFake(() => {});
     dc({ pwm, pins: ports.M1 }).init();

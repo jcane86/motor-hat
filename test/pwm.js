@@ -1,6 +1,7 @@
 'use strict';
 
 const should = require('should');
+const sinon = require('sinon');
 require('should-sinon');
 const pwm = require('./stubpwm.js');
 const i2c = require('./stubi2c.js');
@@ -34,6 +35,28 @@ describe('lib/pwm.js', () => {
           throw e;
         }
       }).should.not.throw();
+    });
+
+    it('should require callbacks for asynch methods', () => {
+      (function () {
+        pwm({ i2c }).init().softwareReset();
+      }).should.throw();
+
+      (function () {
+        pwm({ i2c }).init().setPWMFreq(1600);
+      }).should.throw();
+
+      (function () {
+        pwm({ i2c }).init().getPWMFreq();
+      }).should.throw();
+
+      (function () {
+        pwm({ i2c }).init().setAllPWM(1, 2);
+      }).should.throw();
+
+      (function () {
+        pwm({ i2c }).init().setPin(1, 0);
+      }).should.throw();
     });
   });
 
@@ -72,6 +95,50 @@ describe('lib/pwm.js', () => {
 
     it('should wake up the PWM chip', () => {
       i2c.writeByteSync.getCall(call++).should.be.calledWith(addr, 0x00, 0xBEE && 0x01);
+    });
+  });
+
+  describe('init(cb)', () => {
+    const addr = 0x40;
+
+    it('should recognize the i2c devfile and init the i2c driver', (done) => {
+      i2c.resetAll();
+      pwm.seti2c(0);
+      pwm({ i2c }).init(() => {
+        i2c.open.should.be.calledOnce();
+        i2c.open.should.be.calledWith(0, {});
+        i2c.resetAll();
+        pwm.seti2c(1);
+        pwm({ i2c }).init(() => {
+          i2c.open.should.be.calledOnce();
+          i2c.open.should.be.calledWith(1, {});
+          done();
+        });
+      });
+    });
+
+    i2c.resetAll();
+    let call = 0;
+    it('should set all PWM pins to 0', (done) => {
+      pwm({ i2c, address: addr }).init(() => {
+        i2c.writeByte.getCall(call++).should.be.calledWith(addr, 0xFA, 0x00);
+        i2c.writeByte.getCall(call++).should.be.calledWith(addr, 0xFB, 0x00);
+        i2c.writeByte.getCall(call++).should.be.calledWith(addr, 0xFC, 0x00);
+        i2c.writeByte.getCall(call++).should.be.calledWith(addr, 0xFD, 0x00);
+        done();
+      });
+    });
+
+    it('should enable all call adress', () => {
+      i2c.writeByte.getCall(call++).should.be.calledWith(addr, 0x01, 0x04);
+    });
+
+    it('should configure all outputs as totem pole', () => {
+      i2c.writeByte.getCall(call++).should.be.calledWith(addr, 0x00, 0x01);
+    });
+
+    it('should wake up the PWM chip', () => {
+      i2c.writeByte.getCall(call++).should.be.calledWith(addr, 0x00, 0xBEE && 0x01);
     });
   });
 
@@ -369,6 +436,85 @@ describe('lib/pwm.js', () => {
       i2c.writeByteSync.getCall(1).should.be.calledWith(addr, 0x07 + offset, 4096 >> 8);
       i2c.writeByteSync.getCall(2).should.be.calledWith(addr, 0x08 + offset, 0);
       i2c.writeByteSync.getCall(3).should.be.calledWith(addr, 0x09 + offset, 0);
+    });
+  });
+
+  describe('Async chained bus read/writes fail', () => {
+    it('should fail on setPWMFreq if i2c read fails (async)', (done) => {
+      const addr = 0x40;
+      const freq = 100;
+
+      i2c.resetAll();
+      const readByteBkp = i2c.readByte;
+      i2c.readByte = sinon.stub().yieldsAsync('error reading', null);
+      const instance = pwm({ i2c, address: addr }).init();
+
+      instance.setPWMFreq(freq, (err) => {
+        should.notEqual(err, null);
+        i2c.readByte = readByteBkp;
+        done();
+      });
+    });
+
+    it('should fail on setPWMFreq if i2c write fails (async)', (done) => {
+      const addr = 0x40;
+      const freq = 100;
+
+      i2c.resetAll();
+      const writeByteBkp = i2c.writeByte;
+      i2c.writeByte = sinon.stub().yieldsAsync('error writing', null);
+      const instance = pwm({ i2c, address: addr }).init();
+
+      instance.setPWMFreq(freq, (err) => {
+        should.notEqual(err, null);
+        i2c.writeByte = writeByteBkp;
+        done();
+      });
+    });
+
+    it('should fail on getPWMFreq if i2c read fails (async)', (done) => {
+      const addr = 0x40;
+
+      i2c.resetAll();
+      const readByteBkp = i2c.readByte;
+      i2c.readByte = sinon.stub().yieldsAsync('error reading', null);
+      const instance = pwm({ i2c, address: addr }).init();
+
+      instance.getPWMFreq((err) => {
+        should.notEqual(err, null);
+        i2c.readByte = readByteBkp;
+        done();
+      });
+    });
+
+    it('should fail on init if i2c read fails (async)', (done) => {
+      const addr = 0x40;
+
+      i2c.resetAll();
+      const readByteBkp = i2c.readByte;
+      i2c.readByte = sinon.stub().yieldsAsync('error reading', null);
+      const instance = pwm({ i2c, address: addr });
+
+      instance.init((err) => {
+        should.notEqual(err, null);
+        i2c.readByte = readByteBkp;
+        done();
+      });
+    });
+
+    it('should fail on init if i2c write fails (async)', (done) => {
+      const addr = 0x40;
+
+      i2c.resetAll();
+      const writeByteBkp = i2c.writeByte;
+      i2c.writeByte = sinon.stub().yieldsAsync('error writing', null);
+      const instance = pwm({ i2c, address: addr });
+
+      instance.init((err) => {
+        should.notEqual(err, null);
+        i2c.writeByte = writeByteBkp;
+        done();
+      });
     });
   });
 });

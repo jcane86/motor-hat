@@ -1,16 +1,7 @@
 'use strict';
 
 const sinon = require('sinon');
-const debug = require('debug')('test');
 
-// const bus = {
-//   writeByteSync: sinon.stub(),
-//   sendByteSync: sinon.stub(),
-//   readByteSync: sinon.stub().returns(0xBEE),
-//   writeByte: sinon.stub().yieldsAsync(null),
-//   sendByte: sinon.stub().yieldsAsync(null),
-//   readByte: sinon.stub().yieldsAsync(null, 0xBEE),
-// };
 const i2c = {
   writeByteSync: sinon.stub(),
   sendByteSync: sinon.stub(),
@@ -28,13 +19,9 @@ const i2c = {
     i2c.openSync.resetHistory();
     i2c.open.resetHistory();
   },
-  // get bus() {
-  //   return i2c;
-  // },
   '@noCallThru': true,
 };
 i2c.open = sinon.stub().callsFake((add, opt, cb) => {
-  debug('i2cOpen');
   process.nextTick(() => {
     cb(null, null);
   });
