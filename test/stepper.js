@@ -16,6 +16,8 @@ const pwm = {
   },
 };
 
+const seqrelease = './stepsequences/release.json';
+const seqthrottling = './stepsequences/throttling.json';
 const seqdoublefwd = './stepsequences/doublefwd.json';
 const seqdoubleback = './stepsequences/doubleback.json';
 const seqsinglefwd = './stepsequences/singlefwd.json';
@@ -216,6 +218,64 @@ describe('lib/stepper.js', () => {
       const oldfreq = inst.options.pulsefreq;
       inst.setSpeed({ sps: 200 });
       inst.options.pulsefreq.should.not.equal(oldfreq);
+    });
+  });
+
+  describe('stepper release', () => {
+    beforeEach(() => {
+      pwm.resetAll();
+    });
+
+    const steps = 1;
+    const p = { W1: [8, 10, 9], W2: [13, 11, 12] };
+    const po = {};
+    po.W1 = { PWM: p.W1[0], IN1: p.W1[1], IN2: p.W1[2] };
+    po.W2 = { PWM: p.W2[0], IN1: p.W2[1], IN2: p.W2[2] };
+
+    it('should release the motor synchronously', () => {
+      const inst = stepper({ pwm, pins: p, pps: 600 });
+      inst.releaseSync();
+
+      checkExpected(seqrelease, pwm, po, steps);
+    });
+  });
+
+  describe('"Current" throttling', () => {
+    beforeEach(() => {
+      pwm.resetAll();
+    });
+
+    const steps = 4;
+    const p = { W1: [8, 10, 9], W2: [13, 11, 12] };
+    const po = {};
+    po.W1 = { PWM: p.W1[0], IN1: p.W1[1], IN2: p.W1[2] };
+    po.W2 = { PWM: p.W2[0], IN1: p.W2[1], IN2: p.W2[2] };
+
+    it('should do 4 double steps fwd with falling pwm values', () => {
+      const inst = stepper({ pwm, pins: p, pps: 600 });
+      inst.stepSync('fwd', 1);
+
+      inst.setCurrent(0.75);
+      inst.stepSync('fwd', 1);
+
+      inst.setCurrent(0.5);
+      inst.stepSync('fwd', 1);
+
+
+      inst.setCurrent(0.25);
+      inst.stepSync('fwd', 1);
+
+      checkExpected(seqthrottling, pwm, po, steps);
+    });
+
+    it('should respect parameter ranges', () => {
+      (function () {
+        stepper({ pwm: { setPWMFreq() {} }, pins: ports[0] }).setCurrent(-1);
+      }).should.throw();
+
+      (function () {
+        stepper({ pwm: { setPWMFreq() {} }, pins: ports[0] }).setCurrent(1.5);
+      }).should.throw();
     });
   });
 
