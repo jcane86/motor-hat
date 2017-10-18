@@ -10,7 +10,30 @@
 $ npm install --save motor-hat
 ```
 
-## Usage
+## DOCS
+
+See the full api here: http://jcane86.github.io/motor-hat
+See it on GitHub here: http://github.com/jcane86/motor-hat
+
+## Notes about 2.0
+
+Some changes will need to be made to transition to the async version of the library in 2.0:
+
+DC Motors: 
+* Methods are now async, and need a callback as last parameter.
+* Old Sync methods remain, just call them as stopSync(), etc..
+* Instance needs to be init()'d
+
+Servo Motors:
+* No changes, everything is still sync (I didn't feel it was necessary, feel free to open an issue or send a PR otherwise).
+
+Stepper Motors:
+* Most methods already had the Sync suffix. Only SetFrequency is now SetFrequencySync.
+* Async methods added.
+* Release and current methods added (actually in 1.3).
+* Instance needs to be init()'d 
+
+## Basic usage
 
 ```js
 // get a motor-hat instance with the following initialized:
@@ -25,18 +48,33 @@ let spec = {
 };
 var motorHat = require('motor-hat')(spec);
 
+// Since MotorHat 2.0, the instance needs to be initialized.
+// This is to enable async initialization, feel free to open an issue if this is a pain.
+motorHat.init();
+
 // For steppers, set speed in rpm or pps (pulses per second) or sps (steps per second).
 // To set it in rpm, set you steps/rev first (default 200)
 // If you set it in pps, the speed will not be constant for different styles or number of microsteps.
 motorHat.steppers[0].setSteps(2048);
-motorHat.steppers[0].setSpeed({rpm:20});
+motorHat.steppers[0].setSpeed({sps:10});
 // Supported syles are 'single', 'double', 'interleaved', and 'microstep'
 motorHat.steppers[0].setStyle('double');
-// stepSync and oneStepSync take number of steps/halfsteps/microsteps as input, 
-// depending on selected style. To do 8 full steps fwd, 4 back:
-motorHat.steppers[0].stepSync('fwd', 8);
-motorHat.steppers[0].stepSync('back', 4);
 
+// Move the motor one full turn fwds synchronously, one back async.
+// step[Sync] and oneStep[Sync] take number of steps as input, 
+// depending on selected style. To do 2048 full steps fwd (sync), 2048 back (async):
+motorHat.steppers[0].stepSync('fwd', 2048);
+motorHat.steppers[0].step('back', 2048, function(err, result) {
+  if (err) {
+    console.log('Oh no, there was an error');
+  } else {
+    // Move on..
+  }
+});
+```
+
+## Further configuration
+```js
 // Supported syles are 'single', 'double', 'interleaved', and 'microstep'
 motorHat.steppers[0].setStyle('microstep');
 // Supported number of microsteps are 8 and 16 (8 by default)
