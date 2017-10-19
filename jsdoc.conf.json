@@ -1,0 +1,41 @@
+{
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "plugins": ["plugins/markdown"],
+  "source"    : {
+    "include" : [
+      "lib/",
+      "package.json",
+      "./README.md"
+    ],
+    "includePattern": ".+\\.js(doc)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "templates": {
+    "dateFormat": "ddd MMM Do YYYY",
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "outputSourceFiles": true,
+    "systemName"      : "MotorHat",
+    "footer"          : "(c) jcane86 2017",
+    "copyright"       : "MotorHat Copyright © 2017 jcane86.",
+    "navType"         : "vertical",
+    "theme"           : "flatly",
+    "linenums"        : true,
+    "collapseSymbols" : false,
+    "inverseNav"      : true
+  },
+  "markdown": {
+    "parser": "marked",
+    "hardwrap": true,
+    "githubRepoName": "motor-hat",
+    "githubRepoOwner": "jcane86"
+  },
+  "opts": {
+    "destination": "./docs/",
+    "encoding": "utf8",
+    "recurse": true,
+    "template": "./node_modules/namis"
+  }
+}
