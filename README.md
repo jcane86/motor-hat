@@ -4,10 +4,18 @@
 
 > Node Module to control Adafruit's MotorHAT for the Raspberry Pi [http://jcane86.github.io/motor-hat](http://jcane86.github.io/motor-hat)
 
-## Installation
+## Installation & Basic Usage
 
 ```sh
 $ npm install --save motor-hat
+```
+```js
+var motorHat = require('motor-hat')({steppers: [{ W1: 'M1', W2: 'M2' }]}).init();
+motorHat.steppers[0].setSpeed({pps:100});
+motorHat.steppers[0].step('back', 2048, (err, result) => {
+  if (err) return console.log('Oh no, there was an error', err);
+  console.log(`Did ${result.steps} steps ${result.dir} in ${result.duration/1000} seconds. I had to retry ${result.retried} steps because you set me up quicker than your poor board can handle.`); 
+});
 ```
 
 ## DOCS
@@ -37,7 +45,7 @@ Stepper Motors:
 * Release and current methods added (actually in 1.3).
 * Instance needs to be init()'d
 
-## Basic usage
+## Advanced usage
 
 ```js
 // get a motor-hat instance with the following initialized:
@@ -60,7 +68,7 @@ motorHat.init();
 // To set it in rpm, set you steps/rev first (default 200)
 // If you set it in pps, the speed will not be constant for different styles or number of microsteps.
 motorHat.steppers[0].setSteps(2048);
-motorHat.steppers[0].setSpeed({sps:10});
+motorHat.steppers[0].setSpeed({rpm:5});
 
 // Move the motor one full turn fwds synchronously, one back async.
 // step[Sync] and oneStep[Sync] take number of steps as input, 
