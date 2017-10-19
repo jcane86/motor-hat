@@ -64,7 +64,7 @@
     "lint": "eslint .",
     "prebuild": "rimraf dist",
     "build": "babel --copy-files --out-dir dist --ignore test/ lib",
-    "build-docs": "jsdoc -c ./jsdoc.conf.json && node gitify-docs.js",
+    "build-docs": "rimraf docs && jsdoc -c ./jsdoc.conf.json && node gitify-docs.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "license": "MIT",

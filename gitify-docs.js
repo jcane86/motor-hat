@@ -4,17 +4,9 @@ const fs = require('fs');
 
 mutiny(
   { outdir: './docs/', transform: [gh], rename: file => `${file}.gh` },
-  { root: './docs/', fileFilter: 'module*.html' },
-);
+  { root: './docs/', fileFilter: 'module*.html' })
+  .on('error', (error) => console.log('error', error))
+  .on('data', (d) => fs.renameSync(d.outfile, d.file))
+  // .on('end', overwriteFiles);
 
-fs.readdir('./docs/motor-hat/1.0.0-semanticrelease', (err, files) => {
-  files.forEach((file) => {
-    if (file.indexOf('.gh')) {
-      fs.rename(
-        `./docs/motor-hat/1.0.0-semanticrelease/${file}`,
-        `./docs/motor-hat/1.0.0-semanticrelease/${file.replace('.gh', '')}`,
-        () => {},
-      );
-    }
-  });
-});
+// overwriteFiles();

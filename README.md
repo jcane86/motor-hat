@@ -32,7 +32,7 @@ Servo Motors:
 * No changes, everything is still sync (I didn't feel it was necessary, feel free to open an issue or send a PR otherwise).
 
 Stepper Motors:
-* Most methods already had the Sync suffix. Only SetFrequency is now SetFrequencySync.
+* Most methods already had the Sync suffix. Only setFrequency is now setFrequencySync.
 * Async methods added.
 * Release and current methods added (actually in 1.3).
 * Instance needs to be init()'d
