@@ -32,4 +32,4 @@ deploy:
   github_token: $GH_TOKEN # Set in travis-ci.org dashboard
   local_dir: docs/motor-hat/1.0.0-semanticrelease
   on:
-    branch: 2.0.0
+    branch: master
