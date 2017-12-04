@@ -6,3 +6,5 @@ dist
 .nyc_output
 npm-debug.log
 docs
+yarn.lock
+package-lock.json
