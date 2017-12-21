@@ -65,7 +65,7 @@
     "prebuild": "rimraf dist",
     "build": "babel --copy-files --out-dir dist --ignore test/ lib",
     "build-docs": "rimraf docs && jsdoc -c ./jsdoc.conf.json && node gitify-docs.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release"
   },
   "license": "MIT",
   "dependencies": {
@@ -80,11 +80,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-2"
-    ]
   }
 }
