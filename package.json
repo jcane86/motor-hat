@@ -41,7 +41,7 @@
     "isparta": "^4.0.0",
     "jsdoc": "^3.5.5",
     "jsdoc-githubify": "github:jcane86/jsdoc-githubify",
-    "mocha": "^4.0.0",
+    "mocha": "^5.0.0",
     "mutiny": "^0.4.0",
     "namis": "^1.0.3",
     "nyc": "^11.0.2",
