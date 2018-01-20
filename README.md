@@ -1,5 +1,7 @@
 # 🏁 motor-hat 🎩
 
+[![Join the chat at https://gitter.im/motor-hat/Lobby](https://badges.gitter.im/motor-hat/Lobby.svg)](https://gitter.im/motor-hat/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url] [![semantic-release][semrel-image]][semrel-url] [![Commitizen friendly][commitizen-image]][commitizen-url] [![Greenkeeper badge](https://badges.greenkeeper.io/jcane86/motor-hat.svg)](https://greenkeeper.io/)
 
 > Node Module to control Adafruit's MotorHAT for the Raspberry Pi [http://jcane86.github.io/motor-hat](http://jcane86.github.io/motor-hat)
