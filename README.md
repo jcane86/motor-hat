@@ -1,6 +1,6 @@
 # 🏁 motor-hat 🎩
 
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url] [![semantic-release][semrel-image]][semrel-url] [![Commitizen friendly][commitizen-image]][commitizen-url] [![Greenkeeper badge](https://badges.greenkeeper.io/jcane86/motor-hat.svg)](https://greenkeeper.io/)
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url] [![semantic-release][semrel-image]][semrel-url] [![Commitizen friendly][commitizen-image]][commitizen-url] [![Greenkeeper badge](https://badges.greenkeeper.io/jcane86/motor-hat.svg)](https://greenkeeper.io/) [![Gitter badge](https://badges.gitter.im/motor-hat.png)](https://gitter.im/motor-hat)
 
 > Node Module to control Adafruit's MotorHAT for the Raspberry Pi [http://jcane86.github.io/motor-hat](http://jcane86.github.io/motor-hat)
 
