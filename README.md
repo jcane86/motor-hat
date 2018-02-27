@@ -49,11 +49,13 @@ Stepper Motors:
 
 ```js
 // get a motor-hat instance with the following initialized:
+// * a non-default I2C address for the motor hat (default is 0x6F)
 // * a stepper with winding one on 'M1' and winding two on 'M2' ports
 // * a dc motor on port 'M4'
 // * a servo on channel 0
 // * a servo on channel 14
 let spec = {
+    address: 0x60,
     steppers: [{ W1: 'M1', W2: 'M2' }],
     dcs: ['M4'],
     servos: [0,14]
