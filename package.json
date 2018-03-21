@@ -50,7 +50,7 @@
     "semantic-release": "^15.0.0",
     "should": "^13.0.0",
     "should-sinon": "0.0.6",
-    "sinon": "^4.0.0"
+    "sinon": "^5.0.0"
   },
   "repository": "jcane86/motor-hat",
   "scripts": {
