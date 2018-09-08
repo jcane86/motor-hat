@@ -1,12 +1,10 @@
 language: node_js
 node_js:
+  - 10
   - v9
   - v8
   - v7
   - v6
-  - v5
-  - v4
-  - 10
 cache:
   yarn: false
   directories:
