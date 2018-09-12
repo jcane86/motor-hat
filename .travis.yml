@@ -24,33 +24,16 @@ before_script:
   - npm prune
 after_success:
   - npm run report-coverage
-jobs:
-  include:
-    - stage: npm release
-      install:
-        - npm install i2c-bus --ignore-scripts
-        - npm install
-      script: 
-        - echo "Deploying to npm ..."
-        - npm run build
-      deploy:
-        provider: script
-        skip_cleanup: true
-        script:
-          - npx travis-deploy-once "npx semantic-release"
-        on:
-          branch: master
-    - stage: github pages release
-      install:
-        - npm install i2c-bus --ignore-scripts
-        - npm install
-      script: 
-        - echo "Deploying to github pages ..."
-        - npm run build-docs
-      deploy:
-        provider: pages
-        skip_cleanup: true
-        github_token: $GH_TOKEN # Set in travis-ci.org dashboard
-        local_dir: docs/motor-hat/1.0.0-semanticrelease
-        on:
-          branch: master
+  - npm run build
+  - npm run build-docs
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script:
+      - npx travis-deploy-once "npx semantic-release"
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GH_TOKEN # Set in travis-ci.org dashboard
+    local_dir: docs/motor-hat/1.0.0-semanticrelease
+    on:
+      branch: master
