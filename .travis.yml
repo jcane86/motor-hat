@@ -3,8 +3,6 @@ node_js:
   - 10
   - v9
   - v8
-  - v7
-  - v6
 cache:
   yarn: false
   directories:
@@ -31,8 +29,6 @@ deploy:
     skip_cleanup: true
     script:
       - npx travis-deploy-once "npx semantic-release"
-    on:
-      node: "10"
   - provider: pages
     skip_cleanup: true
     github_token: $GH_TOKEN # Set in travis-ci.org dashboard
