@@ -24,12 +24,15 @@ before_script:
   - npm prune
 after_success:
   - npm run report-coverage
-  - npm run build
-  - npm run build-docs
 jobs:
   include:
     - stage: npm release
-      script: echo "Deploying to npm ..."
+      install:
+        - npm install i2c-bus --ignore-scripts
+        - npm install
+      script: 
+        - echo "Deploying to npm ..."
+        - npm run build
       deploy:
         provider: script
         skip_cleanup: true
@@ -38,7 +41,12 @@ jobs:
         on:
           branch: master
     - stage: github pages release
-      script: echo "Deploying to github pages ..."
+      install:
+        - npm install i2c-bus --ignore-scripts
+        - npm install
+      script: 
+        - echo "Deploying to github pages ..."
+        - npm run build-docs
       deploy:
         provider: pages
         skip_cleanup: true
