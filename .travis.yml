@@ -25,12 +25,15 @@ before_script:
 after_success:
   - npm run report-coverage
   - npm run build
-  - npm run semantic-release
   - npm run build-docs
 deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GH_TOKEN # Set in travis-ci.org dashboard
-  local_dir: docs/motor-hat/1.0.0-semanticrelease
-  on:
-    branch: master
+  - provider: script
+    skip_cleanup: true
+    script:
+      - npx travis-deploy-once "npx semantic-release"
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GH_TOKEN # Set in travis-ci.org dashboard
+    local_dir: docs/motor-hat/1.0.0-semanticrelease
+    on:
+      branch: master
