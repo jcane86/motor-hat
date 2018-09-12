@@ -31,6 +31,8 @@ deploy:
     skip_cleanup: true
     script:
       - npx travis-deploy-once "npx semantic-release"
+    on:
+      node: "lts/*"
   - provider: pages
     skip_cleanup: true
     github_token: $GH_TOKEN # Set in travis-ci.org dashboard
