@@ -65,7 +65,9 @@
     "prebuild": "rimraf dist",
     "build": "babel --copy-files --out-dir dist --ignore test/ lib",
     "build-docs": "rimraf docs && jsdoc -c ./jsdoc.conf.json && node gitify-docs.js",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "license": "MIT",
   "dependencies": {
@@ -74,11 +76,13 @@
     "i2c-bus": "^1.2.0",
     "parambulator": "^1.5.2",
     "raspi-ver": "^1.0.2",
-    "sleep": "^5.1.0"
+    "sleep": "^5.1.0",
+    "snyk": "^1.192.3"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "snyk": true
 }
