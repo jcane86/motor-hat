@@ -30,7 +30,7 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
     "coveralls": "^3.0.0",
-    "cz-conventional-changelog": "^2.0.0",
+    "cz-conventional-changelog": "^3.0.2",
     "del": "^4.0.0",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^13.0.0",
