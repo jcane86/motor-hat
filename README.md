@@ -118,6 +118,11 @@ motorHat.dcs[0].run('back');
 // stop the dc motor
 motorHat.dcs[0].stop();
 ```
+
+## As seen in
+Some of our friends made cool stuff using motor-hat. Drop us a PR to add your project to this list.
+
+ - [@joeljameswatson]( https://github.com/joeljameswatson ) : Laser Mandala, a really cool remote controlled lights show ([joeljameswatson/laser-mandala]( https://github.com/joeljameswatson/laser-mandala ))
 ## License
 
 MIT © [J. Cane](https://www.github.com/jcane86)
