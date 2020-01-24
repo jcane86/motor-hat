@@ -47,7 +47,7 @@
     "nyc": "^14.0.0",
     "proxyquire": "^2.0.0",
     "rimraf": "^3.0.0",
-    "semantic-release": "^15.13.24",
+    "semantic-release": "^16.0.0",
     "should": "^13.0.0",
     "should-sinon": "0.0.6",
     "sinon": "^7.2.4"
