@@ -110,13 +110,13 @@ motorHat.servos[0].moveTo(100);
 
 
 // Start dc motor forward (by default at 100% speed)
-motorHat.dcs[0].run('fwd');
+motorHat.dcs[0].runSync('fwd');
 // Set DC motor speed to 50%
-motorHat.dcs[0].setSpeed(50);
+motorHat.dcs[0].setSpeedSync(50);
 // reverse the dc motor to back direction
-motorHat.dcs[0].run('back');
+motorHat.dcs[0].runSync('back');
 // stop the dc motor
-motorHat.dcs[0].stop();
+motorHat.dcs[0].stopSync();
 ```
 
 ## As seen in
