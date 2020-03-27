@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>servo.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav id="nav">
+    <h3 class="group-title"><a href="index.html">&#x3C; Home &#x3E;</a></h3><input class="search" placeholder="Search" type="text"><div class="list"><h3 class="group-title">Modules</h3><ul><li><a href="module-MotorHat.html" class="className">MotorHat</a></li><li><a href="module-MotorHat_DC.html" class="className">MotorHat/DC</a></li><li><a href="module-MotorHat_Servo.html" class="className">MotorHat/Servo</a></li><li><a href="module-MotorHat_Stepper.html" class="className">MotorHat/Stepper</a></li></ul><h3 class="group-title">Namespaces</h3><ul><li><a href="module-MotorHat_DC-dc.html" class="className">dc</a><ul class='methods'><li data-type='method'><a href="module-MotorHat_DC-dc.html#init" class="methodName">init</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#run" class="methodName">run</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#runSync" class="methodName">runSync</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#setFrequency" class="methodName">setFrequency</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#setFrequencySync" class="methodName">setFrequencySync</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#setSpeed" class="methodName">setSpeed</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#setSpeedSync" class="methodName">setSpeedSync</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#stop" class="methodName">stop</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#stopSync" class="methodName">stopSync</a></li></ul></li><li><a href="module-MotorHat_Servo-servo.html" class="className">servo</a><ul class='methods'><li data-type='method'><a href="module-MotorHat_Servo-servo.html#calibrate" class="methodName">calibrate</a></li><li data-type='method'><a href="module-MotorHat_Servo-servo.html#moveTo" class="methodName">moveTo</a></li></ul></li><li><a href="module-MotorHat_Stepper-stepper.html" class="className">stepper</a><ul class='methods'><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#init" class="methodName">init</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#oneStep" class="methodName">oneStep</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#oneStepSync" class="methodName">oneStepSync</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#release" class="methodName">release</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#releaseSync" class="methodName">releaseSync</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setCurrent" class="methodName">setCurrent</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setFrequency" class="methodName">setFrequency</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setFrequencySync" class="methodName">setFrequencySync</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setMicrosteps" class="methodName">setMicrosteps</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setSpeed" class="methodName">setSpeed</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setSteps" class="methodName">setSteps</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setStyle" class="methodName">setStyle</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#step" class="methodName">step</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#stepSync" class="methodName">stepSync</a></li></ul></li><li><a href="module-MotorHat-motorhat.html" class="className">motorhat</a><ul class='methods'><li data-type='method'><a href="module-MotorHat-motorhat.html#init" class="methodName">init</a></li></ul></li></ul></div>
+</nav>
+
+<div id="main">
+    
+        <h1 class="page-title">servo.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+/**
+ * @module MotorHat/Servo
+ */
+
+const debug = require('debug')('motor-hat:servolib');
+const parambulator = require('parambulator');
+
+const errHdlr = function errHdlr(err) {
+  if (err) {
+    throw new Error(err);
+  }
+};
+
+
+/**
+ * Creates a servo motor controller.
+ * Pass in an options object to generate an uninitialized ServoLib object.
+ *
+ * @example Basic Usage:
+ *
+ * const opts = {
+ *  pwm: pwm,
+ *  pin: 1,
+ *  min: 0.7,
+ *  max: 3.2,
+ *  freq: 1600
+ * };
+ *
+ * const servo = require('./servo.js')(opts);
+ *
+ * @param {Object} opts Servo controller initialization options.
+ * @param {Object} opts.pwm PWM Interface Object
+ * @param {Number} opts.pin Servo controller pin. Which pin (0 to 15) is the servo connected to?
+ * @param {Number} opts.min Duration in ms of pulse at position 0.
+ * @param {Number} opts.max Duration in ms of pulse at position 100.
+ * @param {Number} opts.freq PWM Controller frequency for the servo.
+ * @returns {module:MotorHat/Servo~servo}
+ */
+module.exports = function Servo(opts) {
+  const posspec = parambulator({
+    pos: {
+      type$: 'number',
+      min$: 0,
+      max$: 100,
+    },
+  });
+  const optspec = parambulator({
+    pin: {
+      type$: 'number',
+      required$: true,
+      notempty: true,
+      min$: 0,
+      max$: 15,
+    },
+    pwm: 'object$, required$, notempty$',
+    min: {
+      type$: 'number',
+      default$: 0.7,
+    },
+    max: {
+      type$: 'number',
+      default$: 3.2,
+    },
+    freq: {
+      type$: 'number',
+      default$: 50,
+    },
+  });
+
+  let options;
+  let minCount;
+  let maxCount;
+
+  const calculateMinMax = function calculateMinMax() {
+    minCount = (options.min * options.freq * 4096) / 1000;
+    maxCount = (options.max * options.freq * 4096) / 1000;
+  };
+
+  /**
+   * Move Servo to desired position.
+   *
+   * @instance
+   * @memberOf module:MotorHat/Servo~servo
+   * @param {Number} pos Relative position (0% to 100%).
+   */
+  const moveTo = function moveTo(pos) {
+    posspec.validate({ pos }, errHdlr);
+    const count = minCount + ((pos / 100) * (maxCount - minCount));
+
+    options.pwm.setPWMFreqSync(options.freq);
+    options.pwm.setPWMSync(options.pin, 0, count);
+    debug(`moveTo(): Moved servolib to position ${pos}% = ${count} counts.`);
+  };
+
+  // @name {module:MotorHat/Servo~servo#calibrate}
+  /**
+   * Calibrate the limits for the servolib
+   *
+   * @instance
+   * @memberOf module:MotorHat/Servo~servo
+   * @param {Number} freq The update freq in Hz
+   * @param {Number} min  The min. pulse in ms
+   * @param {Number} max  The max. pulse in ms
+   */
+  const calibrate = function calibrate(freq, min, max) {
+    options.freq = freq;
+    options.min = min;
+    options.max = max;
+    calculateMinMax();
+    debug('calibrate(): Set new Servo Update Freq: %d', options.freq);
+    debug(`calibrate(): Set new minimum pulse ${options.min} ms = ${minCount} counts.`);
+    debug(`calibrate(): Set new maximum pulse ${options.max} ms = ${maxCount} counts.`);
+  };
+
+  /**
+   * Servo Controller Object
+   *
+   * @namespace servo
+   * @see Use {@link module:MotorHat/Servo|Servo()} for object creation.
+   * @see Use {@link module:MotorHat/Servo~servo#init} for object initialization.
+   * @type {Object}
+   */
+  const servo = {
+    moveTo,
+    calibrate,
+  };
+
+  optspec.validate(opts, errHdlr);
+  options = opts;
+  calculateMinMax();
+  return Object.create(servo);
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri, 27 Mar 2020 12:02:27 GMT using
+    <a href="https://www.npmjs.com/package/namis">Namis</a> theme.
+</footer>
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.nicescroll/3.6.0/jquery.nicescroll.min.js"></script>
+<script src="scripts/namis.search.jquery.js"></script>
+<script>prettyPrint();
+(function($){
+    $('nav').niceScroll({
+        cursorwidth: 7,
+        hwacceleration: true,
+        cursorcolor: "#036564",
+        cursorborder: "1px solid #036564"
+    });
+
+    $('html').niceScroll({
+        cursorwidth: 10,
+        hwacceleration: true,
+        smoothscroll: true,
+        cursorminheight: 32,
+        enablemousewheel: true, // nicescroll can manage mouse wheel events
+        enablekeyboard: true // nicescroll can manage keyboard events
+        ,cursorcolor: "#033649"
+    });
+
+    $('#nav').search(['className', 'methodName']);
+})(jQuery);
+</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

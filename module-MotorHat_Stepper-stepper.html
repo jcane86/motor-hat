@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>stepper - Documentation</title>
+<script src="scripts/prettify/prettify.js"></script>
+<script src="scripts/prettify/lang-css.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+<link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+<link type="text/css" rel="stylesheet" href="styles/custom.css">
+</head>
+<body>
+<input type="checkbox" id="nav-trigger" class="nav-trigger">
+<label for="nav-trigger" class="navicon-button x">
+<div class="navicon"></div>
+</label>
+<label for="nav-trigger" class="overlay"></label>
+<nav id="nav">
+<h3 class="group-title"><a href="index.html">&#x3C; Home &#x3E;</a></h3><input class="search" placeholder="Search" type="text"><div class="list"><h3 class="group-title">Modules</h3><ul><li><a href="module-MotorHat.html" class="className">MotorHat</a></li><li><a href="module-MotorHat_DC.html" class="className">MotorHat/DC</a></li><li><a href="module-MotorHat_Servo.html" class="className">MotorHat/Servo</a></li><li><a href="module-MotorHat_Stepper.html" class="className">MotorHat/Stepper</a></li></ul><h3 class="group-title">Namespaces</h3><ul><li><a href="module-MotorHat_DC-dc.html" class="className">dc</a><ul class="methods"><li data-type="method"><a href="module-MotorHat_DC-dc.html#init" class="methodName">init</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#run" class="methodName">run</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#runSync" class="methodName">runSync</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#setFrequency" class="methodName">setFrequency</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#setFrequencySync" class="methodName">setFrequencySync</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#setSpeed" class="methodName">setSpeed</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#setSpeedSync" class="methodName">setSpeedSync</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#stop" class="methodName">stop</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#stopSync" class="methodName">stopSync</a></li></ul></li><li><a href="module-MotorHat_Servo-servo.html" class="className">servo</a><ul class="methods"><li data-type="method"><a href="module-MotorHat_Servo-servo.html#calibrate" class="methodName">calibrate</a></li><li data-type="method"><a href="module-MotorHat_Servo-servo.html#moveTo" class="methodName">moveTo</a></li></ul></li><li><a href="module-MotorHat_Stepper-stepper.html" class="className">stepper</a><ul class="methods"><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#init" class="methodName">init</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#oneStep" class="methodName">oneStep</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#oneStepSync" class="methodName">oneStepSync</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#release" class="methodName">release</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#releaseSync" class="methodName">releaseSync</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setCurrent" class="methodName">setCurrent</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setFrequency" class="methodName">setFrequency</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setFrequencySync" class="methodName">setFrequencySync</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setMicrosteps" class="methodName">setMicrosteps</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setSpeed" class="methodName">setSpeed</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setSteps" class="methodName">setSteps</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setStyle" class="methodName">setStyle</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#step" class="methodName">step</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#stepSync" class="methodName">stepSync</a></li></ul></li><li><a href="module-MotorHat-motorhat.html" class="className">motorhat</a><ul class="methods"><li data-type="method"><a href="module-MotorHat-motorhat.html#init" class="methodName">init</a></li></ul></li></ul></div>
+</nav>
+<div id="main">
+<h1 class="page-title">stepper</h1>
+<section>
+<header>
+<h2>
+<span class="ancestors"><a href="module-MotorHat_Stepper.html">module:MotorHat/Stepper</a>~</span>
+stepper
+</h2>
+</header>
+<article>
+<div class="container-overview">
+<div class="description"><p>Stepper Controller Object</p></div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L792">lineno 792</a>
+</li>
+</ul></dd>
+<dt class="tag-see">See:</dt>
+<dd class="tag-see">
+<ul>
+<li>Use <a href="module-MotorHat_Stepper.html">Stepper()</a> for object creation.</li>
+<li>Use <a href="module-MotorHat_Stepper-stepper.html#init">module:MotorHat/Stepper~stepper#init</a> for object initialization.</li>
+</ul>
+</dd>
+</dl>
+</div>
+<h3 class="subsection-title">Methods</h3>
+<h4 class="name" id="init"><span class="type-signature"></span>init<span class="signature">(cb<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="module-MotorHat_Stepper-stepper.html">module:MotorHat/Stepper~stepper</a>}</span></h4>
+<div class="description">
+<p>Initialize the Stepeper controller instance.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Attributes</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>cb</code></td>
+<td class="type">
+<span class="param-type">callback</span>
+</td>
+<td class="attributes">
+&lt;optional><br>
+</td>
+<td class="description last"><p>Optional node style callback for asynch initialization</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L770">lineno 770</a>
+</li>
+</ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>Returns init'd Stepper controller object (self),<br>either directly or in second parameter to callback if callback provided, to enable chaining.</p>
+</div>
+<dl class="param-type">
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type"><a href="module-MotorHat_Stepper-stepper.html">module:MotorHat/Stepper~stepper</a></span>
+</dd>
+</dl>
+<h4 class="name" id="oneStep"><span class="type-signature"></span>oneStep<span class="signature">(dir, cb)</span><span class="type-signature"></span></h4>
+<div class="description">
+<p>Perform one step asynchronously.<br>Configuration as stepping style, speed, etc should have been set previously.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>dir</code></td>
+<td class="type">
+<span class="param-type">'fwd'</span>
+|
+<span class="param-type">'back'</span>
+</td>
+<td class="description last"><p>Direction of movement</p></td>
+</tr>
+<tr>
+<td class="name"><code>cb</code></td>
+<td class="type">
+<span class="param-type">callback</span>
+</td>
+<td class="description last"><p>Node style callback. cb(err, result).</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L577">lineno 577</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="oneStepSync"><span class="type-signature"></span>oneStepSync<span class="signature">(dir)</span><span class="type-signature"></span></h4>
+<div class="description">
+<p>Perform one step asynchronously.<br>Configuration as stepping style, speed, etc should have been set previously.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>dir</code></td>
+<td class="type">
+<span class="param-type">'fwd'</span>
+|
+<span class="param-type">'back'</span>
+</td>
+<td class="description last"><p>Direction of movement</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L597">lineno 597</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="release"><span class="type-signature"></span>release<span class="signature">(cb)</span><span class="type-signature"></span></h4>
+<div class="description">
+<p>Release the stepper motor asynchronously.</p>
+<p>Stops applying current to the motor coils.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>cb</code></td>
+<td class="type">
+<span class="param-type">Callback</span>
+</td>
+<td class="description last"><p>Node style callback</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L723">lineno 723</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="releaseSync"><span class="type-signature"></span>releaseSync<span class="signature">()</span><span class="type-signature"></span></h4>
+<div class="description">
+<p>Release the stepper motor synchronously.<br>Stops applying current to the motor coils.</p>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L738">lineno 738</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="setCurrent"><span class="type-signature"></span>setCurrent<span class="signature">(current)</span><span class="type-signature"></span></h4>
+<div class="description">
+<p>Set the current rate at which to supply the steps.<br>Provide a number from 0 to 1 and the current will be reduced proportionally</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>current</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="description last"><p>Current rate, from 0 to 1.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L754">lineno 754</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="setFrequency"><span class="type-signature"></span>setFrequency<span class="signature">(freq, cb)</span><span class="type-signature"></span></h4>
+<div class="description">
+<p>Set PWM Controller working frequency asynchronously.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>freq</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="description last"><p>PWM frequency.</p></td>
+</tr>
+<tr>
+<td class="name"><code>cb</code></td>
+<td class="type">
+<span class="param-type">callback</span>
+</td>
+<td class="description last"><p>Node style callback. cb(err, result).</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L506">lineno 506</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="setFrequencySync"><span class="type-signature"></span>setFrequencySync<span class="signature">(freq)</span><span class="type-signature"></span></h4>
+<div class="description">
+<p>Set PWM Controller working frequency synchronously.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>freq</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="description last"><p>PWM frequency.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L521">lineno 521</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="setMicrosteps"><span class="type-signature"></span>setMicrosteps<span class="signature">(ms)</span><span class="type-signature"></span></h4>
+<div class="description">
+<p>Set desired number of microsteps per step.<br>(Used for microstepping)</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>ms</code></td>
+<td class="type">
+<span class="param-type">8</span>
+|
+<span class="param-type">16</span>
+</td>
+<td class="description last"><p>Microsteps per step</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L535">lineno 535</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="setSpeed"><span class="type-signature"></span>setSpeed<span class="signature">(speed)</span><span class="type-signature"></span></h4>
+<div class="description">
+<p>Set motor speed for step().</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>speed</code></td>
+<td class="type">
+<span class="param-type">Object</span>
+</td>
+<td class="description last">
+<h6>Properties</h6>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Attributes</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>sps</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="attributes">
+&lt;optional><br>
+</td>
+<td class="description last"><p>Speed in steps per second.</p></td>
+</tr>
+<tr>
+<td class="name"><code>pps</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="attributes">
+&lt;optional><br>
+</td>
+<td class="description last"><p>Speed in pulses per second (pulses can be steps, microsteps, etc)</p></td>
+</tr>
+<tr>
+<td class="name"><code>rpm</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="attributes">
+&lt;optional><br>
+</td>
+<td class="description last"><p>Speed in revolutions per minute.</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L453">lineno 453</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="setSteps"><span class="type-signature"></span>setSteps<span class="signature">(steps)</span><span class="type-signature"></span></h4>
+<div class="description">
+<p>Set number of steps per revolution for motor.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>steps</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="description last"><p>Number of steps per revolution for stepper motor.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L557">lineno 557</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="setStyle"><span class="type-signature"></span>setStyle<span class="signature">(style)</span><span class="type-signature"></span></h4>
+<div class="description">
+<p>Set stepping style.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>style</code></td>
+<td class="type">
+<span class="param-type">'single'</span>
+|
+<span class="param-type">'double'</span>
+|
+<span class="param-type">'interleaved'</span>
+|
+<span class="param-type">'microstep'</span>
+</td>
+<td class="description last"><p>Stepping style.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L489">lineno 489</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="step"><span class="type-signature"></span>step<span class="signature">(dir, steps, cb)</span><span class="type-signature"> &rarr; {<a href="module-MotorHat_Stepper-stepper.html#.StepResult">module:MotorHat/Stepper~stepper.StepResult</a>}</span></h4>
+<div class="description">
+<p>Perform arbitrary number of steps asynchronously.<br>Configuration as stepping style, speed, etc should have been set previously.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>dir</code></td>
+<td class="type">
+<span class="param-type">'fwd'</span>
+|
+<span class="param-type">'back'</span>
+</td>
+<td class="description last"><p>Direction of movement</p></td>
+</tr>
+<tr>
+<td class="name"><code>steps</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="description last"><p>Number of steps.</p></td>
+</tr>
+<tr>
+<td class="name"><code>cb</code></td>
+<td class="type">
+<span class="param-type">callback</span>
+</td>
+<td class="description last"><p>Node style callback. cb(err, result).</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L630">lineno 630</a>
+</li>
+</ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>result The result of the action.</p>
+</div>
+<dl class="param-type">
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type"><a href="module-MotorHat_Stepper-stepper.html#.StepResult">module:MotorHat/Stepper~stepper.StepResult</a></span>
+</dd>
+</dl>
+<h4 class="name" id="stepSync"><span class="type-signature"></span>stepSync<span class="signature">(dir, steps)</span><span class="type-signature"> &rarr; {<a href="module-MotorHat_Stepper-stepper.html#.StepSyncResult">module:MotorHat/Stepper~stepper.StepSyncResult</a>}</span></h4>
+<div class="description">
+<p>Perform arbitrary number of steps synchronously.<br>Configuration as stepping style, speed, etc should have been set previously.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>dir</code></td>
+<td class="type">
+<span class="param-type">'fwd'</span>
+|
+<span class="param-type">'back'</span>
+</td>
+<td class="description last"><p>Direction of movement</p></td>
+</tr>
+<tr>
+<td class="name"><code>steps</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="description last"><p>Number of steps.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L687">lineno 687</a>
+</li>
+</ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>result The result of the action.</p>
+</div>
+<dl class="param-type">
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type"><a href="module-MotorHat_Stepper-stepper.html#.StepSyncResult">module:MotorHat/Stepper~stepper.StepSyncResult</a></span>
+</dd>
+</dl>
+<h3 class="subsection-title">Type Definitions</h3>
+<h4 class="name" id=".StepResult">StepResult</h4>
+<h5>Type:</h5>
+<ul>
+<li>
+<span class="param-type">Object</span>
+</li>
+</ul>
+<h5 class="subsection-title">Properties:</h5>
+<table class="props">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>StepResult.steps</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="description last"><p>Performed steps</p></td>
+</tr>
+<tr>
+<td class="name"><code>StepResult.dir</code></td>
+<td class="type">
+<span class="param-type">String</span>
+</td>
+<td class="description last"><p>Direction of steps performed</p></td>
+</tr>
+<tr>
+<td class="name"><code>StepResult.duration</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="description last"><p>Time in ms taken to perform the steps</p></td>
+</tr>
+<tr>
+<td class="name"><code>StepResult.retried</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="description last"><p>Number of steps retried.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L609">lineno 609</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id=".StepSyncResult">StepSyncResult</h4>
+<h5>Type:</h5>
+<ul>
+<li>
+<span class="param-type">Object</span>
+</li>
+</ul>
+<h5 class="subsection-title">Properties:</h5>
+<table class="props">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>StepResult.steps</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="description last"><p>Performed steps</p></td>
+</tr>
+<tr>
+<td class="name"><code>StepResult.dir</code></td>
+<td class="type">
+<span class="param-type">String</span>
+</td>
+<td class="description last"><p>Direction of steps performed</p></td>
+</tr>
+<tr>
+<td class="name"><code>StepResult.duration</code></td>
+<td class="type">
+<span class="param-type">Number</span>
+</td>
+<td class="description last"><p>Time in ms taken to perform the steps</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js">stepper.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/stepper.js#L668">lineno 668</a>
+</li>
+</ul></dd>
+</dl>
+</article>
+</section>
+</div>
+<br class="clear">
+<footer>
+Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri, 27 Mar 2020 12:02:27 GMT using
+<a href="https://www.npmjs.com/package/namis">Namis</a> theme.
+</footer>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.nicescroll/3.6.0/jquery.nicescroll.min.js"></script>
+<script src="scripts/namis.search.jquery.js"></script>
+<script>prettyPrint();
+(function($){
+$('nav').niceScroll({
+cursorwidth: 7,
+hwacceleration: true,
+cursorcolor: "#036564",
+cursorborder: "1px solid #036564"
+});
+$('html').niceScroll({
+cursorwidth: 10,
+hwacceleration: true,
+smoothscroll: true,
+cursorminheight: 32,
+enablemousewheel: true, // nicescroll can manage mouse wheel events
+enablekeyboard: true // nicescroll can manage keyboard events
+,cursorcolor: "#033649"
+});
+$('#nav').search(['className', 'methodName']);
+})(jQuery);
+</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

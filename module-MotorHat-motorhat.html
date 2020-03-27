@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>motorhat - Documentation</title>
+<script src="scripts/prettify/prettify.js"></script>
+<script src="scripts/prettify/lang-css.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+<link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+<link type="text/css" rel="stylesheet" href="styles/custom.css">
+</head>
+<body>
+<input type="checkbox" id="nav-trigger" class="nav-trigger">
+<label for="nav-trigger" class="navicon-button x">
+<div class="navicon"></div>
+</label>
+<label for="nav-trigger" class="overlay"></label>
+<nav id="nav">
+<h3 class="group-title"><a href="index.html">&#x3C; Home &#x3E;</a></h3><input class="search" placeholder="Search" type="text"><div class="list"><h3 class="group-title">Modules</h3><ul><li><a href="module-MotorHat.html" class="className">MotorHat</a></li><li><a href="module-MotorHat_DC.html" class="className">MotorHat/DC</a></li><li><a href="module-MotorHat_Servo.html" class="className">MotorHat/Servo</a></li><li><a href="module-MotorHat_Stepper.html" class="className">MotorHat/Stepper</a></li></ul><h3 class="group-title">Namespaces</h3><ul><li><a href="module-MotorHat_DC-dc.html" class="className">dc</a><ul class="methods"><li data-type="method"><a href="module-MotorHat_DC-dc.html#init" class="methodName">init</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#run" class="methodName">run</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#runSync" class="methodName">runSync</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#setFrequency" class="methodName">setFrequency</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#setFrequencySync" class="methodName">setFrequencySync</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#setSpeed" class="methodName">setSpeed</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#setSpeedSync" class="methodName">setSpeedSync</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#stop" class="methodName">stop</a></li><li data-type="method"><a href="module-MotorHat_DC-dc.html#stopSync" class="methodName">stopSync</a></li></ul></li><li><a href="module-MotorHat_Servo-servo.html" class="className">servo</a><ul class="methods"><li data-type="method"><a href="module-MotorHat_Servo-servo.html#calibrate" class="methodName">calibrate</a></li><li data-type="method"><a href="module-MotorHat_Servo-servo.html#moveTo" class="methodName">moveTo</a></li></ul></li><li><a href="module-MotorHat_Stepper-stepper.html" class="className">stepper</a><ul class="methods"><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#init" class="methodName">init</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#oneStep" class="methodName">oneStep</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#oneStepSync" class="methodName">oneStepSync</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#release" class="methodName">release</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#releaseSync" class="methodName">releaseSync</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setCurrent" class="methodName">setCurrent</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setFrequency" class="methodName">setFrequency</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setFrequencySync" class="methodName">setFrequencySync</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setMicrosteps" class="methodName">setMicrosteps</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setSpeed" class="methodName">setSpeed</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setSteps" class="methodName">setSteps</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#setStyle" class="methodName">setStyle</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#step" class="methodName">step</a></li><li data-type="method"><a href="module-MotorHat_Stepper-stepper.html#stepSync" class="methodName">stepSync</a></li></ul></li><li><a href="module-MotorHat-motorhat.html" class="className">motorhat</a><ul class="methods"><li data-type="method"><a href="module-MotorHat-motorhat.html#init" class="methodName">init</a></li></ul></li></ul></div>
+</nav>
+<div id="main">
+<h1 class="page-title">motorhat</h1>
+<section>
+<header>
+<h2>
+<span class="ancestors"><a href="module-MotorHat.html">module:MotorHat</a>~</span>
+motorhat
+</h2>
+</header>
+<article>
+<div class="container-overview">
+<div class="description"><p>motorHat controller</p>
+<p>Needs to be initialized with init().</p></div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js">index.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js#L279">lineno 279</a>
+</li>
+</ul></dd>
+<dt class="tag-see">See:</dt>
+<dd class="tag-see">
+<ul>
+<li>Use <a href="module-MotorHat.html">MotorHat()</a> for object creation.</li>
+<li>Use <a href="module-MotorHat-motorhat.html#init">module:MotorHat~motorhat#init</a> for object initialization.</li>
+</ul>
+</dd>
+</dl>
+</div>
+<h3 class="subsection-title">Members</h3>
+<h4 class="name" id=".dclib"><span class="type-signature">(static, constant) </span>dclib<span class="type-signature"> :<a href="module-MotorHat_DC.html">module:MotorHat/DC</a></span></h4>
+<div class="description">
+<p>DC Controller Factory</p>
+</div>
+<h5>Type:</h5>
+<ul>
+<li>
+<span class="param-type"><a href="module-MotorHat_DC.html">module:MotorHat/DC</a></span>
+</li>
+</ul>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js">index.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js#L38">lineno 38</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id=".servolib"><span class="type-signature">(static, constant) </span>servolib<span class="type-signature"> :<a href="module-MotorHat_Servo.html">module:MotorHat/Servo</a></span></h4>
+<div class="description">
+<p>Servo Controller Factory</p>
+</div>
+<h5>Type:</h5>
+<ul>
+<li>
+<span class="param-type"><a href="module-MotorHat_Servo.html">module:MotorHat/Servo</a></span>
+</li>
+</ul>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js">index.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js#L24">lineno 24</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id=".stepperlib"><span class="type-signature">(static, constant) </span>stepperlib<span class="type-signature"> :<a href="module-MotorHat_Stepper.html">module:MotorHat/Stepper</a></span></h4>
+<div class="description">
+<p>Stepper Controller Factory</p>
+</div>
+<h5>Type:</h5>
+<ul>
+<li>
+<span class="param-type"><a href="module-MotorHat_Stepper.html">module:MotorHat/Stepper</a></span>
+</li>
+</ul>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js">index.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js#L31">lineno 31</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="dcs"><span class="type-signature">(constant) </span>dcs<span class="type-signature"> :Array.&lt;module:MotorHat/DC~dC></span></h4>
+<div class="description">
+<p>Array of initialized DC controllers</p>
+</div>
+<h5>Type:</h5>
+<ul>
+<li>
+<span class="param-type">Array.&lt;module:MotorHat/DC~dC></span>
+</li>
+</ul>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js">index.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js#L153">lineno 153</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="servos"><span class="type-signature">(constant) </span>servos<span class="type-signature"> :Array.&lt;<a href="module-MotorHat_Servo-servo.html">module:MotorHat/Servo~servo</a>></span></h4>
+<div class="description">
+<p>Array of initialized Servo controllers</p>
+</div>
+<h5>Type:</h5>
+<ul>
+<li>
+<span class="param-type">Array.&lt;<a href="module-MotorHat_Servo-servo.html">module:MotorHat/Servo~servo</a>></span>
+</li>
+</ul>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js">index.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js#L161">lineno 161</a>
+</li>
+</ul></dd>
+</dl>
+<h4 class="name" id="steppers"><span class="type-signature">(constant) </span>steppers<span class="type-signature"> :Array.&lt;<a href="module-MotorHat_Stepper-stepper.html">module:MotorHat/Stepper~stepper</a>></span></h4>
+<div class="description">
+<p>Array of initialized Stepper controllers</p>
+</div>
+<h5>Type:</h5>
+<ul>
+<li>
+<span class="param-type">Array.&lt;<a href="module-MotorHat_Stepper-stepper.html">module:MotorHat/Stepper~stepper</a>></span>
+</li>
+</ul>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js">index.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js#L145">lineno 145</a>
+</li>
+</ul></dd>
+</dl>
+<h3 class="subsection-title">Methods</h3>
+<h4 class="name" id="init"><span class="type-signature"></span>init<span class="signature">(cb)</span><span class="type-signature"> &rarr; {<a href="module-MotorHat-motorhat.html">module:MotorHat~motorhat</a>}</span></h4>
+<div class="description">
+<p>Initialize the motorHat library instance.</p>
+<p>Instantiates the individual Motor/Servo/Stepper controllers and initializes them.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>cb</code></td>
+<td class="type">
+</td>
+<td class="description last"><p>Optional node style callback for asynch initialization</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js">index.js</a>
+,
+<a href="https://github.com/jcane86/motor-hat/blob/HEAD/lib/index.js#L213">lineno 213</a>
+</li>
+</ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>Returns initialized motorHat object (self), either directly<br>or in second parameter to callback if callback provided, to enable chaining.</p>
+</div>
+<dl class="param-type">
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type"><a href="module-MotorHat-motorhat.html">module:MotorHat~motorhat</a></span>
+</dd>
+</dl>
+</article>
+</section>
+</div>
+<br class="clear">
+<footer>
+Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri, 27 Mar 2020 12:02:27 GMT using
+<a href="https://www.npmjs.com/package/namis">Namis</a> theme.
+</footer>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.nicescroll/3.6.0/jquery.nicescroll.min.js"></script>
+<script src="scripts/namis.search.jquery.js"></script>
+<script>prettyPrint();
+(function($){
+$('nav').niceScroll({
+cursorwidth: 7,
+hwacceleration: true,
+cursorcolor: "#036564",
+cursorborder: "1px solid #036564"
+});
+$('html').niceScroll({
+cursorwidth: 10,
+hwacceleration: true,
+smoothscroll: true,
+cursorminheight: 32,
+enablemousewheel: true, // nicescroll can manage mouse wheel events
+enablekeyboard: true // nicescroll can manage keyboard events
+,cursorcolor: "#033649"
+});
+$('#nav').search(['className', 'methodName']);
+})(jQuery);
+</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

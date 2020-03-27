@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>dc.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav id="nav">
+    <h3 class="group-title"><a href="index.html">&#x3C; Home &#x3E;</a></h3><input class="search" placeholder="Search" type="text"><div class="list"><h3 class="group-title">Modules</h3><ul><li><a href="module-MotorHat.html" class="className">MotorHat</a></li><li><a href="module-MotorHat_DC.html" class="className">MotorHat/DC</a></li><li><a href="module-MotorHat_Servo.html" class="className">MotorHat/Servo</a></li><li><a href="module-MotorHat_Stepper.html" class="className">MotorHat/Stepper</a></li></ul><h3 class="group-title">Namespaces</h3><ul><li><a href="module-MotorHat_DC-dc.html" class="className">dc</a><ul class='methods'><li data-type='method'><a href="module-MotorHat_DC-dc.html#init" class="methodName">init</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#run" class="methodName">run</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#runSync" class="methodName">runSync</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#setFrequency" class="methodName">setFrequency</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#setFrequencySync" class="methodName">setFrequencySync</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#setSpeed" class="methodName">setSpeed</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#setSpeedSync" class="methodName">setSpeedSync</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#stop" class="methodName">stop</a></li><li data-type='method'><a href="module-MotorHat_DC-dc.html#stopSync" class="methodName">stopSync</a></li></ul></li><li><a href="module-MotorHat_Servo-servo.html" class="className">servo</a><ul class='methods'><li data-type='method'><a href="module-MotorHat_Servo-servo.html#calibrate" class="methodName">calibrate</a></li><li data-type='method'><a href="module-MotorHat_Servo-servo.html#moveTo" class="methodName">moveTo</a></li></ul></li><li><a href="module-MotorHat_Stepper-stepper.html" class="className">stepper</a><ul class='methods'><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#init" class="methodName">init</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#oneStep" class="methodName">oneStep</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#oneStepSync" class="methodName">oneStepSync</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#release" class="methodName">release</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#releaseSync" class="methodName">releaseSync</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setCurrent" class="methodName">setCurrent</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setFrequency" class="methodName">setFrequency</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setFrequencySync" class="methodName">setFrequencySync</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setMicrosteps" class="methodName">setMicrosteps</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setSpeed" class="methodName">setSpeed</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setSteps" class="methodName">setSteps</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#setStyle" class="methodName">setStyle</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#step" class="methodName">step</a></li><li data-type='method'><a href="module-MotorHat_Stepper-stepper.html#stepSync" class="methodName">stepSync</a></li></ul></li><li><a href="module-MotorHat-motorhat.html" class="className">motorhat</a><ul class='methods'><li data-type='method'><a href="module-MotorHat-motorhat.html#init" class="methodName">init</a></li></ul></li></ul></div>
+</nav>
+
+<div id="main">
+    
+        <h1 class="page-title">dc.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+/**
+ * @module MotorHat/DC
+ */
+
+const debug = require('debug')('motor-hat:dclib');
+const parambulator = require('parambulator');
+const async = require('async');
+
+const errHdlr = function errHdlr(err) {
+  if (err) {
+    throw new Error(err);
+  }
+};
+
+const isRequired = () => { throw new Error('Async functions require callback'); };
+
+/**
+ * Creates a new DC motor controller
+ *
+ * Pass in an options object to generate an uninitialized DCLib object.
+ *
+ * @example Basic Usage:
+ *
+ * const opts = {
+ *   pwm: pwm,
+ *   pins: {
+ *     PWM: 8,
+ *     IN1: 10,
+ *     IN2: 9,
+ *   },
+ *   speed: 50,
+ *   freq: 1600,
+ * };
+ *
+ * const dc = require('./dc.js')(opts).init();
+ *
+ * @param {Object} opts
+ * @param {Object} opts.pwm PWM Interface Object
+ * @param {Object} opts.pins Pin definition for the motor.
+ * @param {Number} opts.pins.PWM Pin number of the PWM output for the DC motor.
+ * @param {Number} opts.pins.IN1 Pin number of the first coil output for the DC motor.
+ * @param {Number} opts.pins.IN2 Pin number of the second coil output for the DC motor.
+ * @returns {module:MotorHat/DC~dc}
+ */
+module.exports = function DC(opts) {
+  const freqspec = parambulator({ freq: 'number$, required$' });
+  const dirspec = parambulator({
+    dir: {
+      enum$: ['fwd', 'back'],
+      required$: true,
+    },
+  });
+  const speedspec = parambulator({
+    speed: {
+      type$: 'number',
+      min$: 0,
+      max$: 100,
+    },
+  });
+  const optspec = parambulator({
+    pwm: 'required$, notempty$',
+    pins: {
+      required$: true,
+      notempty$: true,
+      minlen$: 3,
+      maxlen$: 3,
+      '*': {
+        type$: 'number',
+        min$: 0,
+        max$: 15,
+      },
+    },
+    speed: {
+      type$: 'number',
+      min$: 0,
+      max$: 100,
+      default$: 100,
+    },
+    frequency: {
+      type$: 'number',
+      default$: 1600,
+    },
+  });
+
+  let options;
+  let pwm;
+  let PWM;
+  let IN1;
+  let IN2;
+
+  /**
+   * Starts the motor in the desired direction.
+   *
+   * @instance
+   * @memberOf module:MotorHat/DC~dc
+   * @param {('fwd'|'back')} dir Direction of movement.
+   * @param {callback} cb Node style callback. Gets called with cb(err, result) after completion.
+   */
+  const run = function run(dir, cb = isRequired()) {
+    dirspec.validate({ dir }, errHdlr);
+    let pinLow;
+    let pinHigh;
+    if (dir === 'fwd') {
+      debug('DC run(): Going FWD');
+      pinLow = IN2;
+      pinHigh = IN1;
+    } else {
+      debug('DC run(): Going BACK');
+      pinLow = IN1;
+      pinHigh = IN2;
+    }
+
+    async.series([
+      pwm.setPin.bind(pwm, pinLow, 0),
+      pwm.setPin.bind(pwm, pinHigh, 1),
+    ], cb);
+  };
+
+  /**
+   * Starts the motor in the desired direction.
+   *
+   * @instance
+   * @memberOf module:MotorHat/DC~dc
+   * @param {('fwd'|'back')} dir Direction of movement.
+   */
+  const runSync = function runSync(dir) {
+    dirspec.validate({ dir }, errHdlr);
+    if (dir === 'fwd') {
+      debug('DC run(): Going FWD');
+      pwm.setPinSync(IN2, 0);
+      pwm.setPinSync(IN1, 1);
+    } else {
+      debug('DC run(): Going BACK');
+      pwm.setPinSync(IN1, 0);
+      pwm.setPinSync(IN2, 1);
+    }
+  };
+
+  /**
+   * Stops the motor.
+   * Doesn't actually brake the motor, just stops applying voltage to it.
+   *
+   * @instance
+   * @memberOf module:MotorHat/DC~dc
+   * @param {callback} cb Node style callback. Gets called with cb(err, result) after completion.
+   */
+  const stop = function stop(cb = isRequired()) {
+    debug('DC run(): Releasing motor');
+    async.series([
+      pwm.setPin.bind(pwm, IN1, 0),
+      pwm.setPin.bind(pwm, IN2, 0),
+    ], cb);
+  };
+
+  /**
+   * Stops the motor.
+   * Doesn't actually brake the motor, just stops applying voltage to it.
+   *
+   * @instance
+   * @memberOf module:MotorHat/DC~dc
+   */
+  const stopSync = function stopSync() {
+    debug('DC run(): Releasing motor');
+    pwm.setPinSync(IN1, 0);
+    pwm.setPinSync(IN2, 0);
+  };
+
+  /**
+   * Sets DC motor speed.
+   * The speed can be set as a percentage, from 0% to 100%. To change the actual top speed,
+   * the actual voltage supplied to the motor needs to be controlled by hardware (get a higher
+   * voltage source).
+   *
+   * @instance
+   * @memberOf module:MotorHat/DC~dc
+   * @param {number} speed Relative speed. 0% to 100%.
+   * @param {callback} cb Node style callback. Gets called with cb(err, result) after completion.
+   */
+  const setSpeed = function setSpeed(speed, cb = isRequired()) {
+    speedspec.validate({ speed }, errHdlr);
+    debug('DC setSpeed(): Setting speed to %d%%', speed);
+    pwm.setPWM(PWM, 0, (speed / 100) * 4080, cb);
+  };
+
+  /**
+   * Sets DC motor speed.
+   * The speed can be set as a percentage, from 0% to 100%. To change the actual top speed,
+   * the actual voltage supplied to the motor needs to be controlled by hardware (get a higher
+   * voltage source).
+   *
+   * @instance
+   * @memberOf module:MotorHat/DC~dc
+   * @param {number} speed Relative speed. 0% to 100%.
+   */
+  const setSpeedSync = function setSpeedSync(speed) {
+    speedspec.validate({ speed }, errHdlr);
+    debug('DC setSpeed(): Setting speed to %d%%', speed);
+    pwm.setPWMSync(PWM, 0, (speed / 100) * 4080);
+  };
+
+  /**
+   * Sets the PWM frequency for the DC motor.
+   * This setting affects the frequency at which the PWM chip will work to command the DC motor.
+   *
+   * @instance
+   * @memberOf module:MotorHat/DC~dc
+   * @param {Number} freq PWM Frequency in Hz.
+   * @param {callback} cb Node style callback. Gets called with cb(err, result) after completion.
+   */
+  const setFrequency = function setFrequency(freq, cb = isRequired()) {
+    freqspec.validate({ freq }, errHdlr);
+    options.frequency = freq;
+    pwm.setPWMFreq(options.frequency, (err, res) => {
+      debug(`PWM Frequency set to: ${options.frequency}`);
+      cb(err, res);
+    });
+  };
+
+  /**
+   * Sets the PWM frequency for the DC motor.
+   * This setting affects the frequency at which the PWM chip will work to command the DC motor.
+   *
+   * @instance
+   * @memberOf module:MotorHat/DC~dc
+   * @param {Number} freq PWM Frequency in Hz.
+   */
+  const setFrequencySync = function setFrequencySync(freq) {
+    freqspec.validate({ freq }, errHdlr);
+    options.frequency = freq;
+    pwm.setPWMFreqSync(options.frequency);
+    debug(`PWM Frequency set to: ${options.frequency}`);
+  };
+
+  /**
+   * Initialize the DC controller instance.
+   *
+   * @instance
+   * @memberOf module:MotorHat/DC~dc
+   * @param {callback} [cb] Optional node style callback for asynch initialization
+   * @returns {module:MotorHat/DC~dc} Returns initialized DC controller object (self),
+   * either directly or in second parameter to callback if callback provided to enable chaining.
+   */
+  const init = function init(cb) {
+    if (cb) {
+      const self = this;
+      async.series(
+        [
+          setFrequency.bind(self, options.frequency), // Hz
+          setSpeed.bind(self, options.speed),
+        ],
+        (err) => { cb(err, self); },
+      );
+    } else {
+      setFrequencySync(options.frequency); // Hz
+      setSpeedSync(options.speed);
+      return this;
+    }
+
+    return true;
+  };
+
+  /**
+   * DC Controller Object
+   *
+   * @namespace dc
+   * @see Use {@link module:MotorHat/DC|DC()} for object creation.
+   * @see Use {@link module:MotorHat/DC~dc#init} for object initialization.
+   * @type {Object}
+   */
+  const dc = {
+    init,
+    run,
+    runSync,
+    stop,
+    stopSync,
+    setSpeed,
+    setSpeedSync,
+    setFrequency,
+    setFrequencySync,
+  };
+
+  optspec.validate(opts, errHdlr);
+  options = opts;
+  [pwm] = [opts.pwm];
+
+  PWM = opts.pins.PWM || opts.pins[0];
+  IN1 = opts.pins.IN1 || opts.pins[1];
+  IN2 = opts.pins.IN2 || opts.pins[2];
+
+  debug(`DC Motor Init: pins set to: ${[PWM, IN1, IN2]}`);
+
+  return Object.create(dc);
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri, 27 Mar 2020 12:02:27 GMT using
+    <a href="https://www.npmjs.com/package/namis">Namis</a> theme.
+</footer>
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.nicescroll/3.6.0/jquery.nicescroll.min.js"></script>
+<script src="scripts/namis.search.jquery.js"></script>
+<script>prettyPrint();
+(function($){
+    $('nav').niceScroll({
+        cursorwidth: 7,
+        hwacceleration: true,
+        cursorcolor: "#036564",
+        cursorborder: "1px solid #036564"
+    });
+
+    $('html').niceScroll({
+        cursorwidth: 10,
+        hwacceleration: true,
+        smoothscroll: true,
+        cursorminheight: 32,
+        enablemousewheel: true, // nicescroll can manage mouse wheel events
+        enablekeyboard: true // nicescroll can manage keyboard events
+        ,cursorcolor: "#033649"
+    });
+
+    $('#nav').search(['className', 'methodName']);
+})(jQuery);
+</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
