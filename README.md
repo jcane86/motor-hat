@@ -4,6 +4,10 @@
 
 > Node Module to control Adafruit's MotorHAT for the Raspberry Pi [http://jcane86.github.io/motor-hat](http://jcane86.github.io/motor-hat)
 
+## Requirements
+
+Node.js >= 18
+
 ## Installation & Basic Usage
 
 ```sh
