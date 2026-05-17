@@ -7,10 +7,10 @@ let dcErr;
 let servoErr;
 let pwmErr;
 
-const stepper = () => ({ init: cb => cb(stepErr) });
-const dc = () => ({ init: cb => cb(dcErr) });
+const stepper = () => ({ init: (cb) => cb(stepErr) });
+const dc = () => ({ init: (cb) => cb(dcErr) });
 const servo = () => { if (servoErr) throw new Error(servoErr); };
-const pwm = () => ({ init: cb => cb(pwmErr) });
+const pwm = () => ({ init: (cb) => cb(pwmErr) });
 const i2c = require('./stubi2c.js');
 
 const motorHat = proxyquire('../lib/index.js', {

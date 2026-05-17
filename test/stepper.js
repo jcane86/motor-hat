@@ -270,7 +270,6 @@ describe('lib/stepper.js', () => {
       po.W1 = { PWM: p.W1[0], IN1: p.W1[1], IN2: p.W1[2] };
       po.W2 = { PWM: p.W2[0], IN1: p.W2[1], IN2: p.W2[2] };
 
-
       const asyncInst = stepper({ pwm, pins: p, pps: 600 }).init();
       pwm.setPWMFreqSync.resetBehavior();
       pwm.setPWMFreqSync = sinon.stub().callsFake(() => {
@@ -359,7 +358,6 @@ describe('lib/stepper.js', () => {
 
       inst.setCurrent(0.5);
       inst.stepSync('fwd', 1);
-
 
       inst.setCurrent(0.25);
       inst.stepSync('fwd', 1);
