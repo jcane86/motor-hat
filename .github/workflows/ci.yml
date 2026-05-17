@@ -6,12 +6,6 @@ on:
   pull_request:
     branches: ['**']
 
-permissions:
-  id-token: write # Required for OIDC / Trusted Publishing
-  contents: write  # Required for semantic-release to push tags
-  issues: write
-  pull-requests: write
-
 jobs:
   test:
     name: Test (Node ${{ matrix.node-version }})
@@ -55,6 +49,12 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    permissions:
+      id-token: write # Required for OIDC / Trusted Publishing
+      contents: write  # Required for semantic-release to push tags
+      issues: write
+      pull-requests: write
+
 
     steps:
       - uses: actions/checkout@v4
