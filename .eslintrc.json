@@ -8,11 +8,14 @@
   },
   "env": {
     "node": true,
-    "mocha": true
+    "mocha": true,
+    "es2020": true
   },
   "rules": {
     "no-param-reassign": ["error", {
       "props": false
-    }]
+    }],
+    "strict": 0,
+    "import/extensions": 0
   }
 }
