@@ -33,14 +33,17 @@ jobs:
         run: npm test
 
       - name: Report coverage
+        if: matrix.node-version == 24
         run: npm run report-coverage
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
       - name: Build
+        if: matrix.node-version == 24
         run: npm run build
 
       - name: Build docs
+        if: matrix.node-version == 24
         run: npm run build-docs
 
 
