@@ -10,6 +10,10 @@ const obj = {
     },
     '@noCallThru': true,
   },
+  sleep: {
+    msleep: () => {},
+    '@noCallThru': true,
+  },
   '@noCallThru': true,
 };
 const pwm = proxyquire('../lib/pwm.js', obj);
