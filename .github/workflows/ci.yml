@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: ['**']
+
+permissions:
+  id-token: write # Required for OIDC / Trusted Publishing
+  contents: write  # Required for semantic-release to push tags
+  issues: write
+  pull-requests: write
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [8, 9, 10]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install i2c-bus (skip native build)
+        run: npm install i2c-bus --ignore-scripts
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Prune
+        run: npm prune
+
+      - name: Test
+        run: npm test
+
+  release:
+    name: Release
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'npm'
+
+      - name: Install i2c-bus (skip native build)
+        run: npm install i2c-bus --ignore-scripts
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Report coverage
+        run: npm run report-coverage
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
+      - name: Build
+        run: npm run build
+
+      - name: Build docs
+        run: npm run build-docs
+
+      - name: Semantic Release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/motor-hat/1.0.0-semanticrelease
