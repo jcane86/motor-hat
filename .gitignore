@@ -7,4 +7,3 @@ dist
 npm-debug.log
 docs
 yarn.lock
-package-lock.json
