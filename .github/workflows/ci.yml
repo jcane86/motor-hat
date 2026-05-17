@@ -35,6 +35,12 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Prune
+        run: npm prune
+
+      - name: Test
+        run: npm test
+
       - name: Report coverage
         run: npm run report-coverage
         env:
@@ -46,11 +52,6 @@ jobs:
       - name: Build docs
         run: npm run build-docs
 
-      - name: Prune
-        run: npm prune
-
-      - name: Test
-        run: npm test
 
   release:
     name: Release
@@ -75,11 +76,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
-
-      - name: Report coverage
-        run: npm run report-coverage
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
       - name: Build
         run: npm run build
