@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [8, 9, 10]
+        node-version: [8, 9, 10, 12, 14, 16, 18, 20, 22, 24]
 
     steps:
       - uses: actions/checkout@v4
@@ -53,10 +53,10 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Use Node.js LTS
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: 24
           cache: 'npm'
 
       - name: Install i2c-bus (skip native build)
