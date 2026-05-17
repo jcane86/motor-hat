@@ -73,8 +73,7 @@
     "debug": "^4.0.0",
     "i2c-bus": "^5.1.0",
     "parambulator": "^1.5.2",
-    "raspi-ver": "^1.0.2",
-    "sleep": "^6.1.0"
+    "raspi-ver": "^1.0.2"
   },
   "config": {
     "commitizen": {
