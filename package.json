@@ -39,7 +39,7 @@
     "husky": "^4.2.1",
     "ink-docstrap": "^1.3.0",
     "isparta": "^4.0.0",
-    "jsdoc": "^3.5.5",
+    "jsdoc": "^3.6.0",
     "jsdoc-githubify": "github:jcane86/jsdoc-githubify",
     "mocha": "^6.0.0",
     "mutiny": "^0.4.0",
