@@ -6,7 +6,7 @@
   "author": {
     "name": "J. Cane",
     "email": "jcane86@gmail.com",
-    "url": "www.github.com/jcane86"
+    "url": "https://www.github.com/jcane86"
   },
   "files": [
     "dist",
@@ -33,7 +33,7 @@
     "cz-conventional-changelog": "^3.0.2",
     "del": "^4.0.0",
     "eslint": "^6.5.1",
-    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-babel": "^5.0.0",
     "eslint-plugin-import": "^2.2.0",
     "husky": "^4.2.1",

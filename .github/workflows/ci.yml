@@ -24,10 +24,10 @@ jobs:
           cache: 'npm'
 
       - name: Install i2c-bus (skip native build)
-        run: npm install i2c-bus --ignore-scripts --legacy-peer-deps
+        run: npm install i2c-bus --ignore-scripts
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
 
       - name: Test
         run: npm test
@@ -69,13 +69,13 @@ jobs:
           cache: 'npm'
 
       - name: Install i2c-bus (skip native build)
-        run: npm install i2c-bus --ignore-scripts --legacy-peer-deps
+        run: npm install i2c-bus --ignore-scripts
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
 
       - name: Prune
-        run: npm prune --legacy-peer-deps
+        run: npm prune
 
       - name: Build
         run: npm run build
